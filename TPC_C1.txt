@@ -1,5 +1,0 @@
-Server listening....
-Server adopted connection #0
-C0: Connection started at: 2018-09-27 16:20:15.585448
-C0 Estado: Listo para recibir
-S: Sending mytext.txt
