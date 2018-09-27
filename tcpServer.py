@@ -3,17 +3,19 @@ import time
 import hashlib
 import datetime
 import json
+import time
 from threading import Thread
 
 
 def threaded_function(conn, addr, id):
-    sout("C" + str(id) + ": Connection started at: " + str(datetime.datetime.now()), id)
+	start = datetime.datetime.now()
+    sout("C" + str(id) + ": Connection started at " + str(start))
     data = conn.recv(chunkSize).decode('utf-8')
-    sout("C" + str(id) + ": " + data, id)
+    sout("C" + str(id) + ": " + data)
 
-    rsp = "Sending " + fileName
+    rsp = "Sending " + fileName + " to C" + str(id) + " with IP " + addr[0]
     sout("S: " + rsp)
-    conn.send()
+    conn.send(rsp.encode('utf-8'))
 
     conn.send(str(time.time()).encode('utf-8'))
     with open(fileName, 'rb') as afile:
