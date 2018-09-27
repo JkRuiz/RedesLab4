@@ -13,16 +13,17 @@ def threaded_function(conn, addr, id):
     data = conn.recv(chunkSize).decode('utf-8')
     sout("C" + str(id) + ": " + data)
 
-    rsp = "Sending " + fileName + " to C" + str(id) + " with IP " + addr[0]
-    sout("S: " + rsp)
+    rsp = "Sending " + fileName
+    sout("S: " + rsp + " to C" + str(id) + " with IP " + addr[0])
     conn.send(rsp.encode('utf-8'))
 
-    conn.send(str(time.time()).encode('utf-8'))
     with open(fileName, 'rb') as afile:
         buf = afile.read()
         hasher.update(buf)
     hasheado = hasher.hexdigest() + '\r\n'
     conn.send(hasheado.encode('utf-8'))
+    sout("S: MD5Hash " + hasheado)
+
     f = open(fileName, 'rb')
     l = f.read(chunkSize)
     while (l):
