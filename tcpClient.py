@@ -1,41 +1,73 @@
 # client.py
+import json
 import time
 import socket
 import hashlib
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # Create a socket object
-host = socket.gethostname()   # Get local machine name
-port = 60000                  # Reserve a port for your service.
-buffersize = 1024
+
+def mesgSend(msg, sock):
+    size = len(msg)
+    #print('EL SIZE AL ENVIAR UN MENSAJE NO ENCODE ES : ', size)
+    if len(str(size)) <= 4:
+        first = str('0' * (4 - len(str(size))))
+        finalMsg = str(first) + str(size) + str(msg)
+    #print('EL MENSAJE ES : ', finalMsg)
+    sock.send(finalMsg.encode())
+
+
+def recive(sock):
+    size = sock.recv(4).decode()
+    if size == '':
+        return ''
+    #print(' EL SIZE DEL CHUNK ES : ', (size))
+    data = sock.recv(int(size)).decode()
+    return data
+
+
+def getProperties():
+    with open('configTCP.ini', 'r') as file:
+        properties = json.load(file)
+    return properties
+
+
+properties = getProperties()
+host = str(properties['serverIp'])
+port = int(properties['serverPort'])
+chunkSize = int(properties['chunkSize'])
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+statusOk = 'STATUS_OK'
+fileOk = 'FILE_OK'
+fileError = 'FILE_ERROR'
+endFile = 'END_OF_FILE'
 
 s.connect((host, port))
-message = 'Hellooo servercito'
-s.send(message.encode('utf-8'))
-tiempoLlegada = s.recv(buffersize)
-hasheado = s.recv(buffersize).decode('utf-8')
+mesgSend(statusOk, s)
+fileName = recive(s)
 hasher = hashlib.md5()
 
+#print('Valor del filename: ', fileName)
+
 with open('received_file', 'wb') as f:
-    print ('file opened')
     while True:
         print('receiving data...')
-        data = s.recv(buffersize)
-        hasher.update(data)
-        if not data:
+        data = recive(s)
+        #print('DATO : ', data)
+        final = data.split(' ')
+        if final[0].strip() == endFile:
+            hasheado = final[1]
             break
-        print('data=%s', (data))
-        print('----------')
+        if data == '':
+            break
+        hasher.update(data.encode())
         # write data to a file
-        f.write(data)
-hasheado2 = hasher.hexdigest() + '\r\n'
-if (hasheado == hasheado2):
-    print('Se recibio el archivo exitosamente')
-else:
-    print('No se recibio el archivo correctamente')
-
-tiempoTotal = time.time() - float(tiempoLlegada)
-print(' Tiempo total en segundos: ', tiempoTotal)
+        # f.write(data)
 f.close()
-print('Successfully get the file')
+
+hasheado2 = hasher.hexdigest()
+if (hasheado.strip() == hasheado2.strip()):
+    mesgSend(fileOk, s)
+else:
+    mesgSend(fileError, s)
 s.close()
+
 print('connection closed')
