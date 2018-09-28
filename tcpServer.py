@@ -7,20 +7,39 @@ import time
 from threading import Thread
 
 
+def mesgSend(msg, sock):
+    size = len(msg)
+    #print('EL SIZE AL ENVIAR UN MENSAJE NO ENCODE ES : ', size)
+    if len(str(size)) <= 4:
+        first = str('0' * (4 - len(str(size))))
+        finalMsg = str(first) + str(size) + str(msg)
+    #print('EL MENSAJE ES : ', finalMsg)
+    sock.send(finalMsg.encode())
+
+
+def recive(sock):
+    size = sock.recv(4).decode()
+    if size == '':
+        return ''
+    #print(' EL SIZE DEL CHUNK ES : ', (size))
+    data = sock.recv(int(size) + 3).decode()
+    return data
+
+
 def threaded_function(conn, addr, id):
     start = datetime.datetime.now()
     sout("C" + str(id) + ": Connection started at " + str(start))
-    data = conn.recv(chunkSize).decode('utf-8')
+    data = recive(conn)
     sout("C" + str(id) + ": " + data)
 
     rsp = "Sending " + fileName
     sout("S: " + rsp + " to C" + str(id) + " with IP " + addr[0])
-    conn.send(rsp.encode('utf-8'))
+    mesgSend(rsp, conn)
 
     f = open(fileName, 'rb')
     l = f.read(chunkSize)
     while (l):
-        conn.send(l)
+        mesgSend(l.decode(), conn)
         l = f.read(chunkSize)
     f.close()
 
@@ -29,10 +48,10 @@ def threaded_function(conn, addr, id):
         hasher.update(buf)
     hasheado = hasher.hexdigest()
     sout("S: END_OF_FILE")
-    conn.send(('END_OF_FILE ' + hasheado).encode('utf-8'))
+    mesgSend(('END_OF_FILE ' + hasheado), conn)
     sout("S: MD5Hash " + hasheado)
 
-    asw = conn.recv(chunkSize).decode('utf-8')
+    asw = recive(conn)
     sout("C" + str(id) + ": " + asw)
     summary = str(datetime.datetime.now() - start) + "s"
     sout("C" + str(id) + ": Transfered in " + summary)

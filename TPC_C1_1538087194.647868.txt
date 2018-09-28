@@ -1,9 +1,0 @@
-Server listening....
-Server adopted connection #1
-C1: Connection started at 2018-09-27 17:28:00.949610
-C1: STATUS_OK
-S: Sending mytext.txt to C1 with IP 192.168.0.21
-S: MD5Hash f5caceb51c09cf314d001ec4aa8f5fee
-S: END_OF_FILE
-C1: FILE_OK
-C1: Transfered in 0:00:00.210148s
