@@ -8,37 +8,31 @@ from threading import Thread
 
 
 def msgSend(msg, sock):
-    size = utf8len(msg)
-    #print('EL SIZE AL ENVIAR UN MENSAJE NO ENCODE ES : ', size)
+    size = len(msg)
     if len(str(size)) <= 4:
         print('SIZE MODIFIED')
         first = str('0' * (4 - len(str(size))))
         finalSize = str(first) + str(size)
     print('EL SIZE ES : ', finalSize.encode())
-    print('EL MENSAJE ES : ', str(msg).encode('utf-8'))
+    print('EL MENSAJE ES : ', str(msg).encode())
     sock.sendall(finalSize.encode())
-    sock.sendall(str(msg).encode('utf-8'))
-
-def utf8len(s):
-    return len(s.encode('utf-8'))
+    sock.sendall(str(msg).encode())
 
 def msgReceive(sock):
-    size = sock.recv(4).decode()
+    size = sock.recvall(sock, 4).decode()
     if size == '':
         return ''
-    #print(' EL SIZE DEL CHUNK ES : ', (size))
-    data = recvall(sock, int(size)).decode('utf-8')
+    data = recvall(sock, int(size)).decode()
     return data
 
 def recvall(sock, n):
-    # Helper function to recv n bytes or return None if EOF is hit
-    data = ''
-    while utf8len(data) < n:
-        packet = sock.recv(n - utf8len(data))
+    data = b''
+    while len(data) < n:
+        packet = sock.recv(n - len(data))
         if not packet:
             return None
-        print("Packet  == ", str(packet))
-        data += str(packet)
+        print("Packet  == ", packet)
+        data += packet
     return data
 
 
