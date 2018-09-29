@@ -13,8 +13,8 @@ def msgSend(msg, sock):
         print('SIZE MODIFIED')
         first = str('0' * (4 - len(str(size))))
         finalSize = str(first) + str(size)
-    print('EL SIZE ES : ', finalSize.encode())
-    print('EL MENSAJE ES : ', str(msg).encode())
+    #print('EL SIZE ES : ', finalSize.encode())
+    #print('EL MENSAJE ES : ', str(msg).encode())
     sock.sendall(finalSize.encode())
     sock.sendall(str(msg).encode())
 
@@ -31,7 +31,7 @@ def recvall(sock, n):
         packet = sock.recv(n - len(data))
         if not packet:
             return None
-        print("Packet  == ", packet)
+        #print("Packet  == ", packet)
         data += packet
     return data
 
@@ -54,7 +54,7 @@ def threaded_function(conn, addr, id):
         l = f.read(chunkSize)
     f.close()
 
-    with open(fileName, 'r') as afile:
+    with open(fileName, 'rb') as afile:
         buf = afile.read()
         hasher.update(buf)
     hasheado = hasher.hexdigest()

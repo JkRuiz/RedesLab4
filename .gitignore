@@ -1,7 +1,5 @@
 # OS generated files  #
 *.DS_Store
 *.log
-randomText250.txt
-randomText500.txt
-randomText1.txt
-
+randomText*.txt
+R_*.txt

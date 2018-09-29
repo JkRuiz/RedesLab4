@@ -11,8 +11,8 @@ def msgSend(msg, sock):
         print('SIZE MODIFIED')
         first = str('0' * (4 - len(str(size))))
         finalSize = str(first) + str(size)
-    print('EL SIZE ES : ', finalSize.encode())
-    print('EL MENSAJE ES : ', str(msg).encode())
+    #print('EL SIZE ES : ', finalSize.encode())
+    #print('EL MENSAJE ES : ', str(msg).encode())
     sock.sendall(finalSize.encode())
     sock.sendall(str(msg).encode())
 
@@ -29,7 +29,7 @@ def recvall(sock, n):
         packet = sock.recv(n - len(data))
         if not packet:
             return None
-        print("Packet  == ", packet)
+        #print("Packet  == ", packet)
         data += packet
     return data
 
@@ -69,7 +69,7 @@ with open('received_file', 'w') as f:
             break
         hasher.update(data.encode())
         # write data to a file
-        # f.write(data)
+        f.write(data)
 f.close()
 
 hasheado2 = hasher.hexdigest()
