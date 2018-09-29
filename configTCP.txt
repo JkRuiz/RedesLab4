@@ -1,8 +1,8 @@
 {
-	"serverPort" : 8072,
+	"serverPort" : 8080,
 	"chunkSize" : 1024,
 	"numberClients" : 1,
 	"fileName" : "randomText1.txt",
 	"logPrefix" : "TPC_C",
-	"serverIp" : "172.20.10.6"
+	"serverIp" : "157.253.205.10"
 }
