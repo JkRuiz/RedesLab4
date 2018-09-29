@@ -4,5 +4,5 @@
 	"numberClients" : 1,
 	"fileName" : "randomText250.txt",
 	"logPrefix" : "TPC_C",
-	"serverIp" : "192.168.10.30"
+	"serverIp" : "172.20.10.6"
 }
