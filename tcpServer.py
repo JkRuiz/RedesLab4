@@ -22,7 +22,7 @@ def msgSend(msg, sock):
 def utf8len(s):
     return len(s.encode('utf-8'))
 
-def msgRecieve(sock):
+def msgReceive(sock):
     size = sock.recv(7).decode()
     if size == '':
         return ''
@@ -34,7 +34,7 @@ def msgRecieve(sock):
 def threaded_function(conn, addr, id):
     start = datetime.datetime.now()
     sout("C" + str(id) + ": Connection started at " + str(start))
-    data = msgRecieve(conn)
+    data = msgReceive(conn)
     sout("C" + str(id) + ": " + data)
 
     rsp = "Sending " + fileName
@@ -57,7 +57,7 @@ def threaded_function(conn, addr, id):
     msgSend(('END_OF_FILE ' + hasheado), conn)
     sout("S: MD5Hash " + hasheado)
 
-    asw = msgRecieve(conn)
+    asw = msgReceive(conn)
     sout("C" + str(id) + ": " + asw)
     summary = str(datetime.datetime.now() - start) + "s"
     sout("C" + str(id) + ": Transfered in " + summary)

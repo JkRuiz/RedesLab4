@@ -20,7 +20,7 @@ def msgSend(msg, sock):
 def utf8len(s):
     return len(s.encode('utf-8'))
 
-def msgRecieve(sock):
+def msgReceive(sock):
     size = sock.recv(7).decode()
     if size == '':
         return ''
