@@ -35,7 +35,8 @@ def recvall(sock, n):
         packet = sock.recv(n - utf8len(data))
         if not packet:
             return None
-        data += packet
+        print("Packet  == ", str(packet))
+        data += str(packet)
     return data
 
 
