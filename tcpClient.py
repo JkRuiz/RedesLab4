@@ -42,7 +42,7 @@ endFile = 'END_OF_FILE'
 
 s.connect((host, port))
 msgSend(statusOk, s)
-fileName = recive(s)
+fileName = msgReceive(s)
 hasher = hashlib.md5()
 
 #print('Valor del filename: ', fileName)

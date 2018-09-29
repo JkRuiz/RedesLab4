@@ -2,7 +2,7 @@
 	"serverPort" : 8072,
 	"chunkSize" : 1024,
 	"numberClients" : 1,
-	"fileName" : "randomText.txt",
+	"fileName" : "randomText250.txt",
 	"logPrefix" : "TPC_C",
-	"serverIp" : "192.168.0.20"
+	"serverIp" : "192.168.10.30"
 }
