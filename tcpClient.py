@@ -39,6 +39,12 @@ def recvall(sock, n):
     return data
 
 
+def getProperties():
+    with open('configTCP.txt', 'r') as file:
+        properties = json.load(file)
+    return properties
+
+
 properties = getProperties()
 host = str(properties['serverIp'])
 port = int(properties['serverPort'])
