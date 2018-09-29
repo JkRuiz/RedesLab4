@@ -7,7 +7,7 @@ import time
 from threading import Thread
 
 
-def mesgSend(msg, sock):
+def msgSend(msg, sock):
     size = len(msg)
     #print('EL SIZE AL ENVIAR UN MENSAJE NO ENCODE ES : ', size)
     if len(str(size)) <= 4:
@@ -17,7 +17,7 @@ def mesgSend(msg, sock):
     sock.send(finalMsg.encode())
 
 
-def recive(sock):
+def msgRecieve(sock):
     size = sock.recv(4).decode()
     if size == '':
         return ''
@@ -29,18 +29,18 @@ def recive(sock):
 def threaded_function(conn, addr, id):
     start = datetime.datetime.now()
     sout("C" + str(id) + ": Connection started at " + str(start))
-    data = recive(conn)
+    data = msgRecieve(conn)
     sout("C" + str(id) + ": " + data)
 
     rsp = "Sending " + fileName
     sout("S: " + rsp + " to C" + str(id) + " with IP " + addr[0])
-    mesgSend(rsp, conn)
+    msgSend(rsp, conn)
 
     f = open(fileName, 'rb')
     l = f.read(chunkSize)
     while (l):
-        print('EL VALOR DE L ES : ' , l)
-        mesgSend(l, conn)
+        #print('EL VALOR DE L ES : ' , l)
+        msgSend(l, conn)
         l = f.read(chunkSize)
     f.close()
 
@@ -49,10 +49,10 @@ def threaded_function(conn, addr, id):
         hasher.update(buf)
     hasheado = hasher.hexdigest()
     sout("S: END_OF_FILE")
-    mesgSend(('END_OF_FILE ' + hasheado), conn)
+    msgSend(('END_OF_FILE ' + hasheado), conn)
     sout("S: MD5Hash " + hasheado)
 
-    asw = recive(conn)
+    asw = msgRecieve(conn)
     sout("C" + str(id) + ": " + asw)
     summary = str(datetime.datetime.now() - start) + "s"
     sout("C" + str(id) + ": Transfered in " + summary)
@@ -72,7 +72,7 @@ fileName = properties['fileName']
 numberClients = int(properties['numberClients'])
 port = int(properties['serverPort'])
 chunkSize = int(properties['chunkSize'])
-logPrefix = properties['logPrefix'] + str(numberClients) + "_" + str(time.time()) + ".txt"
+logPrefix = properties['logPrefix'] + str(numberClients) + "_" + str(time.time()) + ".log"
 
 serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 host = socket.gethostname()
