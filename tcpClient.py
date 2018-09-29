@@ -47,7 +47,7 @@ hasher = hashlib.md5()
 
 #print('Valor del filename: ', fileName)
 
-with open('received_file', 'wb') as f:
+with open('received_file', 'w') as f:
     while True:
         print('receiving data...')
         data = msgReceive(s)

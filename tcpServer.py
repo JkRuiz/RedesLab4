@@ -8,14 +8,17 @@ from threading import Thread
 
 
 def msgSend(msg, sock):
-    size = len(msg)
+    size = utf8len(msg)
     #print('EL SIZE AL ENVIAR UN MENSAJE NO ENCODE ES : ', size)
     if len(str(size)) <= 4:
+        print('SIZE MODIFIED')
         first = str('0' * (4 - len(str(size))))
         finalMsg = str(first) + str(size) + str(msg)
-    #print('EL MENSAJE ES : ', finalMsg)
+    print('EL MENSAJE ES : ', finalMsg)
     sock.send(finalMsg.encode())
 
+def utf8len(s):
+    return len(s.encode('utf-8'))
 
 def msgRecieve(sock):
     size = sock.recv(4).decode()
@@ -36,7 +39,7 @@ def threaded_function(conn, addr, id):
     sout("S: " + rsp + " to C" + str(id) + " with IP " + addr[0])
     msgSend(rsp, conn)
 
-    f = open(fileName, 'rb')
+    f = open(fileName, 'r')
     l = f.read(chunkSize)
     while (l):
         #print('EL VALOR DE L ES : ' , l)
@@ -44,7 +47,7 @@ def threaded_function(conn, addr, id):
         l = f.read(chunkSize)
     f.close()
 
-    with open(fileName, 'rb') as afile:
+    with open(fileName, 'r') as afile:
         buf = afile.read()
         hasher.update(buf)
     hasheado = hasher.hexdigest()
@@ -76,7 +79,7 @@ logPrefix = properties['logPrefix'] + str(numberClients) + "_" + str(time.time()
 
 serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 host = socket.gethostname()
-serverSocket.bind((host, port))  # Bind to the port
+serverSocket.bind(('', port))  # Bind to the port
 serverSocket.listen(numberClients)  # Now wait for client connection.
 
 with  open((logPrefix), 'w') as log:
