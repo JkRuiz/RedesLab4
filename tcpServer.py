@@ -59,7 +59,7 @@ def threaded_function(conn, addr, id):
     conn.close()
 
 def getProperties():
-    with open('configTCP.ini', 'r') as file:
+    with open('configTCP.txt', 'r') as file:
         properties = json.load(file)
     return properties
 
