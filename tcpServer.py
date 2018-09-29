@@ -10,7 +10,7 @@ from threading import Thread
 def msgSend(msg, sock):
     size = len(msg)
     if len(str(size)) <= 4:
-        #print('SIZE MODIFIED')
+        #gprint('SIZE MODIFIED')
         first = str('0' * (4 - len(str(size))))
         finalSize = str(first) + str(size)
     #print('EL SIZE ES : ', finalSize.encode())
