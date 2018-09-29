@@ -13,19 +13,19 @@ def msgSend(msg, sock):
         first = str('0' * (4 - len(str(size))))
         finalSize = str(first) + str(size)
     print('EL SIZE ES : ', finalSize.encode())
-    print('EL MENSAJE ES : ', str(msg).encode())
+    print('EL MENSAJE ES : ', str(msg).encode('utf-8'))
     sock.send(finalSize.encode())
     sock.send(str(msg).encode('utf-8'))
 
 def utf8len(s):
     return len(s.encode('utf-8'))
 
-def msgReceive(sock):
+def msgRecieve(sock):
     size = sock.recv(7).decode()
     if size == '':
         return ''
     #print(' EL SIZE DEL CHUNK ES : ', (size))
-    data = sock.recv(int(size) + 3).decode()
+    data = sock.recv(int(size)).decode('utf-8')
     return data
 
 
