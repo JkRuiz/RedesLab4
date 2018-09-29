@@ -17,7 +17,7 @@ def msgSend(msg, sock):
     print('EL SIZE ES : ', finalSize.encode())
     print('EL MENSAJE ES : ', str(msg).encode())
     sock.send(finalSize.encode())
-    sock.send(str(msg).encode())
+    sock.send(str(msg).encode('utf-8'))
 
 def utf8len(s):
     return len(s.encode('utf-8'))

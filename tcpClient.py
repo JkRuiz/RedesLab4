@@ -6,21 +6,26 @@ import hashlib
 
 
 def msgSend(msg, sock):
-    size = len(msg)
+    size = utf8len(msg)
     #print('EL SIZE AL ENVIAR UN MENSAJE NO ENCODE ES : ', size)
     if len(str(size)) <= 4:
+        print('SIZE MODIFIED')
         first = str('0' * (4 - len(str(size))))
-        finalMsg = str(first) + str(size) + str(msg)
-    #print('EL MENSAJE ES : ', finalMsg)
-    sock.send(finalMsg.encode())
+        finalSize = str(first) + str(size)
+    print('EL SIZE ES : ', finalSize.encode())
+    print('EL MENSAJE ES : ', str(msg).encode())
+    sock.send(finalSize.encode())
+    sock.send(str(msg).encode('utf-8'))
 
+def utf8len(s):
+    return len(s.encode('utf-8'))
 
 def msgReceive(sock):
-    size = sock.recv(4).decode()
+    size = sock.recv(7).decode()
     if size == '':
         return ''
     #print(' EL SIZE DEL CHUNK ES : ', (size))
-    data = sock.recv(int(size)).decode()
+    data = sock.recv(int(size) + 3).decode()
     return data
 
 
