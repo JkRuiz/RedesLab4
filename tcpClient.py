@@ -56,7 +56,7 @@ hasher = hashlib.md5()
 
 #print('Valor del filename: ', fileName)
 
-with open('received_file', 'w') as f:
+with open("R_" + fileName, 'w') as f:
     i = 0
     while True:
         i+=1

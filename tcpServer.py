@@ -43,7 +43,7 @@ def threaded_function(conn, addr, id):
     sout("C" + str(id) + ": " + data)
 
     rsp = "Sending " + fileName
-    sout("S: " + rsp + " to C" + str(id) + " with IP " + addr[0] + " and port " + addr[1])
+    sout("S: " + rsp + " to C" + str(id) + " with IP " + addr[0] + " and port " + str(addr[1]))
     msgSend(rsp, conn)
 
     f = open(fileName, 'r')
