@@ -17,7 +17,7 @@ def msgSend(msg, sock):
     sock.sendall(str(msg).encode())
 
 def msgReceive(sock):
-    size = sock.recvall(sock, 4).decode()
+    size = recvall(sock, 4).decode()
     if size == '':
         return ''
     data = recvall(sock, int(size)).decode()
