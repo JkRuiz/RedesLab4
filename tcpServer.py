@@ -27,7 +27,17 @@ def msgReceive(sock):
     if size == '':
         return ''
     #print(' EL SIZE DEL CHUNK ES : ', (size))
-    data = sock.recvall(int(size)).decode('utf-8')
+    data = recvall(sock, int(size)).decode('utf-8')
+    return data
+
+def recvall(sock, n):
+    # Helper function to recv n bytes or return None if EOF is hit
+    data = b''
+    while utf8len(data) < n:
+        packet = sock.recv(n - len(data))
+        if not packet:
+            return None
+        data += packet
     return data
 
 
