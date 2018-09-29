@@ -39,7 +39,8 @@ def threaded_function(conn, addr, id):
     f = open(fileName, 'rb')
     l = f.read(chunkSize)
     while (l):
-        mesgSend(l.decode(), conn)
+        print('EL VALOR DE L ES : ' , l)
+        mesgSend(l, conn)
         l = f.read(chunkSize)
     f.close()
 

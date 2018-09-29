@@ -1,8 +1,8 @@
 {
-	"serverPort" : 8060,
+	"serverPort" : 8072,
 	"chunkSize" : 1024,
 	"numberClients" : 1,
-	"fileName" : "mytext.txt",
+	"fileName" : "DragonBallSuper.zip",
 	"logPrefix" : "TPC_C",
 	"serverIp" : "192.168.0.20"
 }
