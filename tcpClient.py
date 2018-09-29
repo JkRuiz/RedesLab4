@@ -5,7 +5,7 @@ import socket
 import hashlib
 
 
-def mesgSend(msg, sock):
+def msgSend(msg, sock):
     size = len(msg)
     #print('EL SIZE AL ENVIAR UN MENSAJE NO ENCODE ES : ', size)
     if len(str(size)) <= 4:
@@ -15,7 +15,7 @@ def mesgSend(msg, sock):
     sock.send(finalMsg.encode())
 
 
-def recive(sock):
+def msgReceive(sock):
     size = sock.recv(4).decode()
     if size == '':
         return ''
@@ -41,7 +41,7 @@ fileError = 'FILE_ERROR'
 endFile = 'END_OF_FILE'
 
 s.connect((host, port))
-mesgSend(statusOk, s)
+msgSend(statusOk, s)
 fileName = recive(s)
 hasher = hashlib.md5()
 
@@ -50,7 +50,7 @@ hasher = hashlib.md5()
 with open('received_file', 'wb') as f:
     while True:
         print('receiving data...')
-        data = recive(s)
+        data = msgReceive(s)
         #print('DATO : ', data)
         final = data.split(' ')
         if final[0].strip() == endFile:
@@ -65,9 +65,9 @@ f.close()
 
 hasheado2 = hasher.hexdigest()
 if (hasheado.strip() == hasheado2.strip()):
-    mesgSend(fileOk, s)
+    msgSend(fileOk, s)
 else:
-    mesgSend(fileError, s)
+    msgSend(fileError, s)
 s.close()
 
 print('connection closed')
