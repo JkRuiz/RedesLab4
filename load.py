@@ -2,7 +2,7 @@ import os
 import json
 
 def loadData():
-	with open('/config.txt', 'r') as f:
+	with open('/config.json', 'r') as f:
 		clients = json.load(f)
 	return clients
 
