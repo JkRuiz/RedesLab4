@@ -11,9 +11,9 @@ def run_client(ip):
 	ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 	ssh.connect(ip, username=properties['clientUsername'], password=properties['clientPassword'])
 	print('logged to client == ', str(ip))
-	stdin, stdout, stderr = ssh.exec_command('python3 tcpClient.py')
-	while True:
-		print(stdout.read())
+	
+	stdin, stdout, stderr = ssh.exec_command('python3 /RedesLab4/tcpClient.py')
+	
 	ssh.close()
 
 def getProperties():
