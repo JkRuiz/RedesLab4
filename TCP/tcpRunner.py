@@ -13,6 +13,7 @@ def run_cmd(chan, cmd):
     stdin.flush()
 
 def run_client(id):
+	os.system('sshpass -p "labredesML340" ssh -o StrictHostKeyChecking=no isis@' + properties['clientIPs'][id-1] + ' "rm R_*"')
 	os.system('ClientBashFiles/StartC' + str(id) + '.sh')
 
 def getProperties():
