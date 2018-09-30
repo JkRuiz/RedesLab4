@@ -74,9 +74,9 @@ def getProperties():
     return properties
 
 def sout(l):
-	log.write(l + '\n')
+    log.write(l + '\n')
     log.flush()
-	print(l)
+    print(l)
 
 properties = getProperties()
 fileName = properties['fileName']
