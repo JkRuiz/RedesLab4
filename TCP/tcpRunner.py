@@ -18,8 +18,6 @@ def run_client(ip):
 	print('logged to client == ', str(ip))
 	
 	ssh.exec_command('./RedesLab4/TCP/runClientTCP.sh')
-	
-	ssh.close()
 
 def getProperties():
     with open('configTCP.txt', 'r') as file:
