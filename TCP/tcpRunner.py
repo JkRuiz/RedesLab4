@@ -20,19 +20,22 @@ def getProperties():
         properties = json.load(file)
     return properties
 
-def email():
-	os.system('./killIptraf.sh')
+def killIptraf():
+	os.system("kill $(ps aux | grep 'iptraf' | awk '{print $2}')")
+
+def startIptraf(n):
+	os.system("sudo iptraf -i eth0 -L /home/s2g4/RedesLab4/TCP/TCP_C" + str(n) + "_traffic.log -B")
 
 properties = getProperties()
-os.system('./startIptraf.sh')
+numberClients = int(properties['numberClients'])
+startIptraf(numberClients)
 time.sleep(5)
 serverThread = Thread(target=run_server)
 serverThread.start()
 
-numberClients = int(properties['numberClients'])
 for i in range(numberClients):
 	t = Thread(target=run_client, args=[i+1])
 	t.start()
 
 serverThread.join()
-email()
+killIptraf()
