@@ -51,6 +51,7 @@ def swapProperties(n):
 p = getProperties();
 nClients = p['nClients']
 for i in nClients:
+	print('Running client #', str(i))
 	swapProperties(i)
 	runTest()
 	time.sleep(10)
