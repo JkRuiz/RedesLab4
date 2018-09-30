@@ -4,7 +4,7 @@
 	"numberClients" : 2,
 	"fileName" : "randomText250.txt",
 	"logPrefix" : "TCP_C",
-	"serverIp" : "157.253.205.94",
+	"serverIp" : "157.253.205.94",s
 	"serverUsername" : "s2g4",
 	"serverPassword" : "infracom",
 	"suPassword" : "labredesML340",

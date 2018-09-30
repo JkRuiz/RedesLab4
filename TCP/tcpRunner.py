@@ -14,7 +14,7 @@ def run_cmd(chan, cmd):
 
 def run_client(id):
 	os.system('sshpass -p "labredesML340" ssh -o StrictHostKeyChecking=no isis@' + properties['clientIPs'][id-1] + ' "rm R_*"')
-	os.system('ClientBashFiles/StartC' + str(id) + '.sh')
+	os.system('sshpass -p "labredesML340" ssh -o StrictHostKeyChecking=no isis@' + properties['clientIPs'][id-1] + ' "python3 RedesLab4/TCP/tcpClient.py"')
 
 def getProperties():
     with open('configTCP.txt', 'r') as file:
@@ -30,7 +30,7 @@ def startIptraf(n):
 properties = getProperties()
 numberClients = int(properties['numberClients'])
 startIptraf(numberClients)
-time.sleep(5)
+time.sleep(1)
 serverThread = Thread(target=run_server)
 serverThread.start()
 
