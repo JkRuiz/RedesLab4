@@ -43,7 +43,7 @@ def sout(s):
     log.write(s + '\n')
     log.flush()
 
-with open('RedesLab4/TCP/Logs/clientTCPOut.log', 'w') as log:
+with open('RedesLab4/TCP/clientTCPOut.log', 'w') as log:
     #load properties form json file
     properties = getProperties()
     host = str(properties['serverIp'])
