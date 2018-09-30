@@ -20,10 +20,10 @@ def getProperties():
     return properties
 
 def email():
-	print('Done with test!!')
+	os.system('./killIptraf.sh')
 
 properties = getProperties()
-os.system('./setupTCP.sh')
+os.system('./startIptraf.sh')
 serverThread = Thread(target=run_server)
 serverThread.start()
 
