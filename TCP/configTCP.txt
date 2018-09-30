@@ -3,7 +3,7 @@
 	"chunkSize" : 1024,
 	"numberClients" : 1,
 	"fileName" : "randomText1.txt",
-	"logPrefix" : "TPC_C",
+	"logPrefix" : "TCP_C",
 	"serverIp" : "157.253.205.94",
 	"serverUsername" : "s2g4",
 	"serverPassword" : "infracom",
