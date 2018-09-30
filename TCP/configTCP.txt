@@ -2,14 +2,9 @@
 	"serverPort" : 8080,
 	"chunkSize" : 1024,
 	"numberClients" : 2,
-	"fileName" : "randomText250.txt",
+	"fileName" : "randomText500.txt",
 	"logPrefix" : "TCP_C",
-	"serverIp" : "157.253.205.94",s
-	"serverUsername" : "s2g4",
-	"serverPassword" : "infracom",
-	"suPassword" : "labredesML340",
-	"clientUsername" : "isis",
-	"clientPassword" : "labredesML340",
+	"serverIp" : "157.253.205.94",
 	"clientIPs" : [
 	"172.24.101.117",
 	"172.24.101.118",
