@@ -12,12 +12,12 @@ def run_cmd(chan, cmd):
     stdin.write(cmd + '\n')
     stdin.flush()
 
-def run_client(id):
-	os.system('sshpass -p "labredesML340" ssh -o StrictHostKeyChecking=no isis@' + properties['clientIPs'][id-1] + ' "rm R_*"')
-	os.system('sshpass -p "labredesML340" ssh -o StrictHostKeyChecking=no isis@' + properties['clientIPs'][id-1] + ' "python3 RedesLab4/TCP/tcpClient.py"')
+def run_client(ip):
+	os.system('sshpass -p "labredesML340" ssh -o StrictHostKeyChecking=no isis@' + ip + ' "rm R_*"')
+	os.system('sshpass -p "labredesML340" ssh -o StrictHostKeyChecking=no isis@' + ip + ' "python3 RedesLab4/TCP/tcpClient.py"')
 
 def getProperties():
-    with open('configTCP.txt', 'r') as file:
+    with open('configTCP.json', 'r') as file:
         properties = json.load(file)
     return properties
 
@@ -27,16 +27,28 @@ def killIptraf():
 def startIptraf(n):
 	os.system("sudo iptraf -i eth0 -L /home/s2g4/RedesLab4/TCP/TCP_C" + str(n) + "_traffic.log -B")
 
-properties = getProperties()
-numberClients = int(properties['numberClients'])
-startIptraf(numberClients)
-time.sleep(1)
-serverThread = Thread(target=run_server)
-serverThread.start()
+def runTest():
+	properties = getProperties()
+	numberClients = int(properties['numberClients'])
+	startIptraf(numberClients)
+	time.sleep(1)
+	serverThread = Thread(target=run_server)
+	serverThread.start()
+	for i in range(numberClients):
+		t = Thread(target=run_client, args=[i+1])
+		t.start()
+	serverThread.join()
+	killIptraf()
 
-for i in range(numberClients):
-	t = Thread(target=run_client, args=[i+1])
-	t.start()
+def swapProperties(n):
+	with open('configTCP.json', 'r') as file:
+		properties = json.load(file)
+		properties['numberClients'] = int(n)
+	with open('configTCP.json', 'w') as file:
+		file.write(json.dumps(properties))
+	return properties
 
-serverThread.join()
-killIptraf()
+swapProperties(5)
+
+
+
