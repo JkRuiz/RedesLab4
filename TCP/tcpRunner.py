@@ -25,7 +25,7 @@ def killIptraf():
 	os.system("kill $(ps aux | grep 'iptraf' | awk '{print $2}')")
 
 def startIptraf(n):
-	os.system("sudo iptraf -i eth0 -L /home/s2g4/RedesLab4/TCP/TCP_C" + str(n) + "_traffic.log -B")
+	os.system("sudo iptraf -i eth0 -L /home/s2g4/RedesLab4/TCP/Logs/TCP_C" + str(n) + "_traffic.log -B")
 
 def runTest():
 	properties = getProperties()
