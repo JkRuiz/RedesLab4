@@ -10,6 +10,7 @@ def run_client(ip):
 	ssh = paramiko.SSHClient()
 	ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 	ssh.connect(ip, username=properties['clientUsername'], password=properties['clientPassword'])
+	print('logged to client == ', str(ip))
 	ssh.exec_command('python3 tcpClient.py')
 	ssh.close()
 
