@@ -30,7 +30,7 @@ def email():
 	print('Done with test!!')
 
 properties = getProperties()
-os.system('./setupTCP.sh')E
+os.system('./setupTCP.sh')
 serverThread = Thread(target=run_server)
 serverThread.start()
 
