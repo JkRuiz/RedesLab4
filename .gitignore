@@ -1,5 +1,6 @@
-# OS generated files  #
-*.DS_Store
-*.log
-randomText*.txt
+.DS_Store
+configTCP
+random*.txt
 R_*.txt
+*.log
+

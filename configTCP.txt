@@ -4,5 +4,8 @@
 	"numberClients" : 1,
 	"fileName" : "randomText1.txt",
 	"logPrefix" : "TPC_C",
-	"serverIp" : "157.253.205.10"
+	"serverIp" : "157.253.205.10",
+	"serverUsername" : "s2g4",
+	"serverPassword" : "infracom",
+	"suPassword" : "labredesML340"
 }
