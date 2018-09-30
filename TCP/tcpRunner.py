@@ -48,7 +48,11 @@ def swapProperties(n):
 		file.write(json.dumps(properties))
 	return properties
 
-swapProperties(5)
+properties = getProperties();
+nClients = properties['nClients']
+for i in nClients:
+	swapProperties(i)
+	runTest()
 
 
 
