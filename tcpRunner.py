@@ -6,11 +6,11 @@ def run_server():
 	import tcpServer
 
 def run_client(ip):
-	serverSSH = paramiko.SSHClient()
-	serverSSH.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-	serverSSH.connect(ip, username=properties['clientUsername'], password=properties['clientPassword'])
-	serverSSH.exec_command('./setupTCP.sh')
-
+	ssh = paramiko.SSHClient()
+	ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+	ssh.connect(ip, username=properties['clientUsername'], password=properties['clientPassword'])
+	ssh.exec_command('python3 tcpClient.py')
+	ssh.close()
 
 def getProperties():
     with open('configTCP.txt', 'r') as file:
