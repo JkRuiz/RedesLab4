@@ -38,7 +38,7 @@ def getProperties():
         properties = json.load(file)
     return properties
 
-def log(s):
+def sout(s):
     print(s)
     log.write(s + '\n')
     log.flush()
@@ -58,7 +58,7 @@ with open('clientTCPOut.log', 'w') as log:
     fileOk = 'FILE_OK'
     fileError = 'FILE_ERROR'
     endFile = 'END_OF_FILE'
-    log('done with defining variables')
+    sout('done with defining variables')
 
     #connect to server
     s.connect((host, port))
@@ -77,7 +77,7 @@ with open('clientTCPOut.log', 'w') as log:
         while True:
             i+=1
             if i%100 == 0: 
-                log('receiving data...')
+                sout('receiving data...')
             data = msgReceive(s)
             #print('DATO : ', data)
             final = data.split(' ')
@@ -98,4 +98,4 @@ with open('clientTCPOut.log', 'w') as log:
         msgSend(fileError, s)
     s.close()
 
-    log('connection closed')
+    sout('connection closed')

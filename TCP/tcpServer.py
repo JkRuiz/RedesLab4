@@ -75,6 +75,7 @@ def getProperties():
 
 def sout(l):
 	log.write(l + '\n')
+    log.flush()
 	print(l)
 
 properties = getProperties()
