@@ -13,7 +13,10 @@ def run_cmd(chan, cmd):
     stdin.flush()
 
 def run_client(ip):
-	os.system('sshpass -p "labredesML340" ssh -o StrictHostKeyChecking=no isis@' + str(ip) + ' "rm R_*"')
+	try :
+		os.system('sshpass -p "labredesML340" ssh -o StrictHostKeyChecking=no isis@' + str(ip) + ' "rm R_*"')
+	except:
+		print("Failed to remove at " + str(ip))
 	os.system('sshpass -p "labredesML340" ssh -o StrictHostKeyChecking=no isis@' + str(ip) + ' "python3 RedesLab4/TCP/tcpClient.py"')
 
 def getProperties():
