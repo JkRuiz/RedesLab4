@@ -5,7 +5,7 @@ import time
 from threading import Thread
 
 def run_server():
-	import tcpServer
+	os.system('python3.6 tcpServer.py')
 
 def run_cmd(chan, cmd):
     stdin = chan.makefile('wb')

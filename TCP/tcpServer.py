@@ -92,21 +92,19 @@ serverSocket.bind(('', port))  # Bind to the port
 serverSocket.listen(numberClients)  # Now wait for client connection.
 
 with  open((logPrefix), 'w') as log:
-	sout('Server listening....')
-	tStart = datetime.datetime.now()
+    sout('Server listening....')
+    tStart = datetime.datetime.now()
 
-	threads = []
-	for j in range(numberClients):
-	    conn, addr = serverSocket.accept()
-	    sout('Server adopted connection #' + str(j+1))
-	    thread = Thread(target=threaded_function, args=(conn, addr, j+1))
-	    thread.start()
-	    threads.append(thread)
+    threads = []
+    for j in range(numberClients):
+        conn, addr = serverSocket.accept()
+        sout('Server adopted connection #' + str(j+1))
+        thread = Thread(target=threaded_function, args=(conn, addr, j+1))
+        thread.start()
+        threads.append(thread)
 
-	for i in range(len(threads)):
-	    threads[i].join()
+    for i in range(len(threads)):
+        threads[i].join()
 
-	summary = str(datetime.datetime.now() - tStart) + "s"
-	sout("S: Transfered in " + summary)
-
-
+    summary = str(datetime.datetime.now() - tStart) + "s"
+    sout("S: Transfered in " + summary)
