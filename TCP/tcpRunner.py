@@ -53,6 +53,7 @@ nClients = p['nClients']
 for i in nClients:
 	swapProperties(i)
 	runTest()
+	time.sleep(10)
 
 
 
