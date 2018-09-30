@@ -54,6 +54,7 @@ def threaded_function(conn, addr, id):
         l = f.read(chunkSize)
     f.close()
 
+    hasher = hashlib.md5()
     with open(fileName, 'rb') as afile:
         buf = afile.read()
         hasher.update(buf)
@@ -95,7 +96,6 @@ with  open((logPrefix), 'w') as log:
 	tStart = datetime.datetime.now()
 
 	threads = []
-	hasher = hashlib.md5()
 	for j in range(numberClients):
 	    conn, addr = serverSocket.accept()
 	    sout('Server adopted connection #' + str(j+1))
