@@ -34,7 +34,7 @@ def recvall(sock, n):
     return data
 
 def getProperties():
-    with open('configTCP.txt', 'r') as file:
+    with open('RedesLab4/TCP/configTCP.txt', 'r') as file:
         properties = json.load(file)
     return properties
 
