@@ -12,7 +12,7 @@ def run_client(ip):
 	ssh.connect(ip, username=properties['clientUsername'], password=properties['clientPassword'])
 	print('logged to client == ', str(ip))
 	
-	stdin, stdout, stderr = ssh.exec_command('python3 /RedesLab4/tcpClient.py')
+	stdin, stdout, stderr = ssh.exec_command('python3 RedesLab4/tcpClient.py')
 	
 	ssh.close()
 
