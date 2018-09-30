@@ -33,9 +33,10 @@ def runTest():
 	startIptraf(numberClients)
 	time.sleep(1)
 	serverThread = Thread(target=run_server)
+	listOfIPs = properties['clientIPs']
 	serverThread.start()
 	for i in range(numberClients):
-		t = Thread(target=run_client, args=[i+1])
+		t = Thread(target=run_client, args=[listOfIPs[i]])
 		t.start()
 	serverThread.join()
 	killIptraf()
