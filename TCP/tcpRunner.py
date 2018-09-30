@@ -12,7 +12,7 @@ def run_cmd(chan, cmd):
     stdin.flush()
 
 def run_client(id):
-	os.system('./StartC' + str(id) + '.sh')
+	os.system('/ClientBashFiles/StartC' + str(id) + '.sh')
 
 def getProperties():
     with open('configTCP.txt', 'r') as file:
