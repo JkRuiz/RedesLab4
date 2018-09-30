@@ -13,8 +13,8 @@ def run_cmd(chan, cmd):
     stdin.flush()
 
 def run_client(ip):
-	os.system('sshpass -p "labredesML340" ssh -o StrictHostKeyChecking=no isis@' + ip + ' "rm R_*"')
-	os.system('sshpass -p "labredesML340" ssh -o StrictHostKeyChecking=no isis@' + ip + ' "python3 RedesLab4/TCP/tcpClient.py"')
+	os.system('sshpass -p "labredesML340" ssh -o StrictHostKeyChecking=no isis@' + str(ip) + ' "rm R_*"')
+	os.system('sshpass -p "labredesML340" ssh -o StrictHostKeyChecking=no isis@' + str(ip) + ' "python3 RedesLab4/TCP/tcpClient.py"')
 
 def getProperties():
     with open('configTCP.json', 'r') as file:
@@ -42,14 +42,13 @@ def runTest():
 
 def swapProperties(n):
 	with open('configTCP.json', 'r') as file:
-		properties = json.load(file)
-		properties['numberClients'] = int(n)
+		tmp = json.load(file)
+		tmp['numberClients'] = int(n)
 	with open('configTCP.json', 'w') as file:
-		file.write(json.dumps(properties))
-	return properties
+		file.write(json.dumps(tmp))
 
-properties = getProperties();
-nClients = properties['nClients']
+p = getProperties();
+nClients = p['nClients']
 for i in nClients:
 	swapProperties(i)
 	runTest()
