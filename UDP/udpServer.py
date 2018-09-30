@@ -1,14 +1,6 @@
 import socket
 import json
-
-#Función que recibe los mensajes que entran al socket.
-def msgReceive(sock):
-	data, addr = serverSocket.recvfrom(1024)
-	return data
-
-#Función que envia los datos.
-def msgSend(msg, sock)
-	serverSocket.sendto(msg, sock)
+import time
 
 #Obtiene las propiedades del servidor del archivo configUDP.txt
 def getProperties():
@@ -21,44 +13,62 @@ properties = getProperties()
 #Nombre del archivo que se va a enviar
 fileName = properties['fileName']
 #Numero de clientes a los que se escuchara
-numeroClientes = int(['numberClients'])
+numeroClientes = int(properties['numberClients'])
 #Numero de puerto que se utilizara
 port= int (properties['serverPort'])
+#Tamaño de los paquetes que se van a usar
 chunkSize = int(properties['chunkSize'])
-
-
+#Genera el log de la transacción
+logPrefix = properties['logPrefix'] + str(numeroClientes) + "_" + str(time.time()) + ".log"
 
 
 #genera un socket UDP
 serverSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+#Obtiene el hostname sobre el que se ejecuta el programa
+host = socket.gethostname()
 #la dirección y el puerto por donde el servidor va a escuchar
-serverSocket.bind(('127.0.0.1', 9000))
+serverSocket.bind(('', port))
 
+#contador de paquetes
 i = 0
+#booleano para saber hasta cuando debe seguir activo el while.
 hay = True
+#recepción y envio de mensajes.
 while hay:
 	#recibe los datos del socket y la dirección del cliente
 	data, addr = serverSocket.recvfrom(1024)
 	print (data.decode())
 	#abre el archivo que el cliente envio
-	f = open('randomText500.txt')
+	f = open(fileName)
 
-	outputData = f.read(1024)
-	contador = 0
+	#while para el envio del archivo
 	while (outputData):
-		serverSocket.sendto(outputData.encode(), addr)
-		print(outputData)
-		outputData = f.read(1024)
-		i = i + 1
-		print (i)
 
+		#chunk de información que se enviara 
+		outputData = f.read(chunkSize)
+		#envio de l segmento del archivo
+		serverSocket.sendto(outputData.encode(), addr)
+		#imprime la información enviada
+		print(outputData)
+		#aumenta el contador de paquetes enviados
+		i = i + 1
+		#imprime el contador
+		print (i)
+	#envia mensaje para que el cliente sepa que se termino la transmiciom.
 	outputData = "acabe"
+	#imprime el mensaje de terminar.
 	print(outputData)	
+	#aumenta el contador de paquetes
 	i = i+1
+	#envia el mensaje de termino
 	serverSocket.sendto(outputData.encode(), addr)
+	#imprime el contador de mensajes
 	print (i)
+	# recive el numero de pauqetes recibidos
 	data, addr = serverSocket.recvfrom(1024)
+	#imprime el numero de paquetes enviados
 	print(data.decode())
+	#indica la terminación del while
 	hay = False
 
 
