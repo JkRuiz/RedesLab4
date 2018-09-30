@@ -17,7 +17,7 @@ def run_client(ip):
 	ssh.connect(ip, username=properties['clientUsername'], password=properties['clientPassword'])
 	print('logged to client == ', str(ip))
 	
-	ssh.exec_command('./test.sh')
+	ssh.exec_command('./RedesLab4/TCP/runClientTCP.sh')
 	
 	ssh.close()
 
