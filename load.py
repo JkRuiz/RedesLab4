@@ -7,9 +7,9 @@ def loadData():
 	return clients
 
 def copy_to_client(addr):
-	os.system('sshpass -p "' + properties['clientPassword'] + '"" ssh -o StrictHostKeyChecking=no ' + properties['clientUsername'] + '@' + addr + ' "rm RedesLab4"')
-	os.system('sshpass -p "' + properties['clientPassword'] + '"" ssh -o StrictHostKeyChecking=no ' + properties['clientUsername'] + '@' + addr + ' "rm R_*"')
-	os.system('sshpass -p "' + properties['clientPassword'] + '"" ssh -o StrictHostKeyChecking=no ' + properties['clientUsername'] + '@' + addr + ' "git clone https://github.com/JkRuiz/RedesLab4"')
+	os.system('sshpass -p "' + clients['clientPassword'] + '"" ssh -o StrictHostKeyChecking=no ' + clients['clientUsername'] + '@' + addr + ' "rm RedesLab4"')
+	os.system('sshpass -p "' + clients['clientPassword'] + '"" ssh -o StrictHostKeyChecking=no ' + clients['clientUsername'] + '@' + addr + ' "rm R_*"')
+	os.system('sshpass -p "' + clients['clientPassword'] + '"" ssh -o StrictHostKeyChecking=no ' + clients['clientUsername'] + '@' + addr + ' "git clone https://github.com/JkRuiz/RedesLab4"')
 
 clients = loadData()
 clientIPs = clients['clientIPs']
