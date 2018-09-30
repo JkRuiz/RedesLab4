@@ -29,7 +29,7 @@ serverThread.start()
 
 numberClients = int(properties['numberClients'])
 for i in range(numberClients):
-	t = Thread(target=run_client, args=(i))
+	t = Thread(target=run_client, args=i)
 	t.start()
 
 serverThread.join()
