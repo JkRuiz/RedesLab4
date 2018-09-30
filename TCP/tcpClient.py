@@ -1,8 +1,8 @@
-# client.py
 import json
 import time
 import socket
 import hashlib
+import sys
 
 
 def msgSend(msg, sock):
@@ -38,47 +38,64 @@ def getProperties():
         properties = json.load(file)
     return properties
 
+def log(s):
+    print(s)
+    log.write(s + '\n')
+    log.flush()
 
-properties = getProperties()
-host = str(properties['serverIp'])
-port = int(properties['serverPort'])
-chunkSize = int(properties['chunkSize'])
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-statusOk = 'STATUS_OK'
-fileOk = 'FILE_OK'
-fileError = 'FILE_ERROR'
-endFile = 'END_OF_FILE'
+with open('clientTCPOut.log', 'w') as log:
+    #load properties form json file
+    properties = getProperties()
+    host = str(properties['serverIp'])
+    port = int(properties['serverPort'])
+    chunkSize = int(properties['chunkSize'])
 
-s.connect((host, port))
-msgSend(statusOk, s)
-fileName = msgReceive(s)
-hasher = hashlib.md5()
+    #start socket
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-#print('Valor del filename: ', fileName)
+    #define some constants for the file transfer protocol
+    statusOk = 'STATUS_OK'
+    fileOk = 'FILE_OK'
+    fileError = 'FILE_ERROR'
+    endFile = 'END_OF_FILE'
+    log('done with defining variables')
 
-with open("R_" + fileName, 'w') as f:
-    i = 0
-    while True:
-        i+=1
-        if i%100 == 0: print('receiving data...')
-        data = msgReceive(s)
-        #print('DATO : ', data)
-        final = data.split(' ')
-        if final[0].strip() == endFile:
-            hasheado = final[1]
-            break
-        if data == '':
-            break
-        hasher.update(data.encode())
-        # write data to a file
-        f.write(data)
-f.close()
+    #connect to server
+    s.connect((host, port))
 
-hasheado2 = hasher.hexdigest()
-if (hasheado.strip() == hasheado2.strip()):
-    msgSend(fileOk, s)
-else:
-    msgSend(fileError, s)
-s.close()
+    #tell server client is ready to receive
+    msgSend(statusOk, s)
 
-print('connection closed')
+    #receive filename of file to be transfered
+    fileName = msgReceive(s)
+
+    #create hasher to check integrity later on
+    hasher = hashlib.md5()
+
+    with open("R_" + fileName, 'w') as f:
+        i = 0
+        while True:
+            i+=1
+            if i%100 == 0: 
+                log('receiving data...')
+            data = msgReceive(s)
+            #print('DATO : ', data)
+            final = data.split(' ')
+            if final[0].strip() == endFile:
+                hasheado = final[1]
+                break
+            if data == '':
+                break
+            hasher.update(data.encode())
+            # write data to a file
+            f.write(data)
+    f.close()
+
+    hasheado2 = hasher.hexdigest()
+    if (hasheado.strip() == hasheado2.strip()):
+        msgSend(fileOk, s)
+    else:
+        msgSend(fileError, s)
+    s.close()
+
+    log('connection closed')

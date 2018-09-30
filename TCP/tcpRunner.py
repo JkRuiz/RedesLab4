@@ -26,8 +26,11 @@ def getProperties():
         properties = json.load(file)
     return properties
 
+def email():
+	print('Done with test!!')
+
 properties = getProperties()
-os.system('./setupTCP.sh')
+os.system('./setupTCP.sh')E
 serverThread = Thread(target=run_server)
 serverThread.start()
 
@@ -37,4 +40,4 @@ for i in range(numberClients):
 	run_client(ips[i])
 
 serverThread.join()
-print('Done with test!!')
+email()
