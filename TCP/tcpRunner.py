@@ -11,13 +11,8 @@ def run_cmd(chan, cmd):
     stdin.write(cmd + '\n')
     stdin.flush()
 
-def run_client(ip):
-	ssh = paramiko.SSHClient()
-	ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-	ssh.connect(ip, username=properties['clientUsername'], password=properties['clientPassword'])
-	print('logged to client == ', str(ip))
-	
-	ssh.exec_command('./RedesLab4/TCP/runClientTCP.sh')
+def run_client(id):
+	os.system('./StartC' + str(id) + '.sh')
 
 def getProperties():
     with open('configTCP.txt', 'r') as file:
@@ -33,9 +28,9 @@ serverThread = Thread(target=run_server)
 serverThread.start()
 
 numberClients = int(properties['numberClients'])
-ips = properties['clientIPs']
 for i in range(numberClients):
-	run_client(ips[i])
+	t = Thread(target=run_client, args=(i))
+	t.start()
 
 serverThread.join()
 email()
