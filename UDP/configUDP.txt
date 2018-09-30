@@ -1,0 +1,8 @@
+{
+	"serverPort" : 9000,
+	"chunkSize" : 1024,
+	"numberClients" : 1,
+	"fileName" : "archivoPrueba.txt",
+	"logPrefix" : "UDP_C",
+	"serverIp" : "localhost"
+}
