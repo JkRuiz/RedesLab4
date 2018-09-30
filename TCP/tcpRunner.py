@@ -24,6 +24,7 @@ def email():
 
 properties = getProperties()
 os.system('./startIptraf.sh')
+time.sleep(5)
 serverThread = Thread(target=run_server)
 serverThread.start()
 
