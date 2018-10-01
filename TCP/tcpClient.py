@@ -52,6 +52,7 @@ with open('RedesLab4/TCP/clientTCPOut.log', 'w') as log:
 
     #start socket
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.settimeout(5)
 
     #define some constants for the file transfer protocol
     statusOk = 'STATUS_OK'
