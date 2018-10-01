@@ -76,7 +76,7 @@ with open('RedesLab4/TCP/clientTCPOut.log', 'w') as log:
         i = 0
         while True:
             i+=1
-            if i%100 == 0: 
+            if i%10000 == 0: 
                 sout('receiving data...')
             data = msgReceive(s)
             #print('DATO : ', data)

@@ -15,6 +15,7 @@ def run_cmd(chan, cmd):
 def run_client(ip):
 	try :
 		os.system('sshpass -p "labredesML340" ssh -o StrictHostKeyChecking=no isis@' + str(ip) + ' "rm R_*"')
+		os.system('sshpass -p "labredesML340" ssh -o StrictHostKeyChecking=no isis@' + str(ip) + ' "rm RedesLab4/TCP/*.log"')
 	except:
 		print("Failed to remove at " + str(ip))
 	os.system('sshpass -p "labredesML340" ssh -o StrictHostKeyChecking=no isis@' + str(ip) + ' "python3 RedesLab4/TCP/tcpClient.py"')
