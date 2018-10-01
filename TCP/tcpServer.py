@@ -34,7 +34,7 @@ def recvall(sock, n):
 
 def threaded_function(conn, addr, id):
     #Extended timeout to avoid broken pipes
-    conn.settimeout(9999)
+    conn.settimeout(999999999)
     
     start = datetime.datetime.now()
     sout("C" + str(id) + ": Connection started at " + str(start))
