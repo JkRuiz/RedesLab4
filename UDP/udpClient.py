@@ -1,4 +1,5 @@
 import socket
+import json
 
 #Obtiene las propiedades del servidor del archivo configUDP.txt
 def getProperties():
