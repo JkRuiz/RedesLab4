@@ -27,10 +27,8 @@ def recvall(sock, n):
     data = b''
     while len(data) < n:
         packet = sock.recv(n - len(data))
-        if not packet:
-            return None
-        #print("Packet  == ", packet)
-        data += packet
+        if packet:
+            data += packet
     return data
 
 def getProperties():
@@ -53,7 +51,7 @@ with open('RedesLab4/TCP/clientTCPOut.log', 'w') as log:
     #start socket
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     #Extended timeout to avoid broken pipes
-    s.settimeout(9999999)
+    s.settimeout(999999999)
 
     #define some constants for the file transfer protocol
     statusOk = 'STATUS_OK'
