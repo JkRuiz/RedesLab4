@@ -1,6 +1,7 @@
 import socket
 import json
 import time
+import datetime
 from threading import Thread
 
 #Obtiene las propiedades del servidor del archivo configUDP.txt
@@ -25,8 +26,8 @@ def threaded_function(id, addr):
 	hay = True
 	
 	rsp = "Sending " + fileName
-    
-    sout("S: " + rsp + " to C" + str(id) + " with IP " + addr[0] + " and port " + str(addr[1]))
+
+	sout("S: " + rsp + " to C" + str(id) + " with IP " + addr[0] + " and port " + str(addr[1]))
 	
 	#recepción y envio de mensajes.
 	while hay:
@@ -87,7 +88,7 @@ def threaded_function(id, addr):
 		hay = False
 		
 		summary = str(datetime.datetime.now() - start) + "s"
-    	sout("C" + str(id) + ": Transfered in " + summary)
+		sout("C" + str(id) + ": Transfered in " + summary)
 
 #Obtiene las propiesdades.
 properties = getProperties()
@@ -119,10 +120,9 @@ serverSocket.bind(('', port))
 
 #abre el archivo del log y registra la hora y la fecha
 with  open((logPrefix), 'w') as log:
-    
-    sout('Server listening....')
-    
-    tStart = datetime.datetime.now()
+
+	sout('Server listening....')
+	tStart = datetime.datetime.now()
 	
 	#arreglo de threads
 	threads = []
@@ -134,7 +134,7 @@ with  open((logPrefix), 'w') as log:
 	while j <= numeroClientes:
 		#recibe los datos del socket y la dirección del cliente.
 		data, addr = serverSocket.recvfrom(1024)
-		sout("C" + str(j) + ": " + data)
+		sout("C" + str(j) + ": " + data.decode())
 		#print (data.decode())
 		sout('Server adopted connection #' + str(j+1))
 		if (data):
@@ -147,7 +147,7 @@ with  open((logPrefix), 'w') as log:
 		threads[i].join()
 
 	summary = str(datetime.datetime.now() - tStart) + "s"
-    sout("S: Transfered in " + summary) 
+	sout("S: Transfered in " + summary) 
 
 
 
