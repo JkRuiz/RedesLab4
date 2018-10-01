@@ -45,18 +45,9 @@ def threaded_function(conn, addr, id):
     sout("S: " + rsp + " to C" + str(id) + " with IP " + addr[0] + " and port " + str(addr[1]))
     msgSend(rsp, conn)
 
-    f = open(fileName, 'r')
-    l = f.read(chunkSize)
-    while (l):
+    for l in fileChunks:
         msgSend(l, conn)
-        l = f.read(chunkSize)
-    f.close()
 
-    hasher = hashlib.md5()
-    with open(fileName, 'rb') as afile:
-        buf = afile.read()
-        hasher.update(buf)
-    hasheado = hasher.hexdigest()
     sout("S: END_OF_FILE")
     msgSend(('END_OF_FILE ' + hasheado), conn)
     sout("S: MD5Hash " + hasheado)
@@ -89,6 +80,18 @@ host = socket.gethostname()
 serverSocket.bind(('', port))  # Bind to the port
 serverSocket.listen(numberClients)  # Now wait for client connection.
 
+fileChunks = []
+with open(fileName, 'r') as f:
+    l = f.read(chunkSize)
+    while (l):
+        fileChunks.append(l)
+        l = f.read(chunkSize)
+
+hasher = hashlib.md5()
+with open(fileName, 'rb') as afile:
+    buf = afile.read()
+    hasher.update(buf)
+hasheado = hasher.hexdigest()
 
 with  open((logPrefix), 'w') as log:
     sout('Server listening....')
