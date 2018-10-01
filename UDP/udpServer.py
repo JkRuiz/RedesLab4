@@ -8,7 +8,7 @@ def getProperties():
     with open('configUDP.txt', 'r') as file:
         properties = json.load(file)
     return properties
-def threaded_function(id):
+def threaded_function(id, addr):
 	print(id)
 	#contador de paquetes
 	i = 0
@@ -16,14 +16,11 @@ def threaded_function(id):
 	hay = True
 	#recepción y envio de mensajes.
 	while hay:
-		#recibe los datos del socket y la dirección del cliente.
-		data, addr = serverSocket.recvfrom(1024)
-		print (data.decode())
+		
 		#abre el archivo que el cliente envio.
 		f = open(fileName)
-
+		#
 		outputData = " "
-
 		#while para el envio del archivo.
 		while (outputData):
 			#chunk de información que se enviara. 
@@ -78,11 +75,17 @@ serverSocket.bind(('', port))
 
 #arreglo de threads
 threads = []
-#for que inicializa los threads.
-for j in range (numeroClientes):
-	thread = Thread(target=threaded_function, args=(j,))
-	thread.start()
-	threads.append(thread)
+
+j = 1
+while j <= numeroClientes:
+
+		#recibe los datos del socket y la dirección del cliente.
+		data, addr = serverSocket.recvfrom(1024)
+		print (data.decode())
+		if (data):
+			thread = Thread(target=threaded_function, args=(j, addr))
+			thread.start()
+			threads.append(thread)
 #for que sincroniza los threads.
 for i in range(len(threads)):
 	threads[i].join() 
