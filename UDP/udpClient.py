@@ -20,7 +20,7 @@ while hay:
 	#envia mensaje al servidor
 	message, addrSerer = cliente.recvfrom(1024)
 	#recibe el mensaje y lo guarda en la
-	if "acabe" not in message.decode():
+	if 'END_OF_FILE' not in message.decode():
 		#se incrementa el numero de paquetes recibidos
 		i = i +1
 		#se añade el mensaje que llego al que ya había

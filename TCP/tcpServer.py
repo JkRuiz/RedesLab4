@@ -91,6 +91,7 @@ host = socket.gethostname()
 serverSocket.bind(('', port))  # Bind to the port
 serverSocket.listen(numberClients)  # Now wait for client connection.
 
+
 with  open((logPrefix), 'w') as log:
     sout('Server listening....')
     tStart = datetime.datetime.now()
