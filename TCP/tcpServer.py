@@ -70,7 +70,7 @@ def threaded_function(conn, addr, id):
     conn.close()
 
 def getProperties():
-    with open('configTCP.txt', 'r') as file:
+    with open('configTCP.json', 'r') as file:
         properties = json.load(file)
     return properties
 
@@ -84,7 +84,7 @@ fileName = properties['fileName']
 numberClients = int(properties['numberClients'])
 port = int(properties['serverPort'])
 chunkSize = int(properties['chunkSize'])
-logPrefix = properties['logPrefix'] + str(numberClients) + "_" + str(time.time()) + ".log"
+logPrefix = properties['logPrefix'] + str(numberClients) + "_Server.log"
 
 serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 host = socket.gethostname()
@@ -92,21 +92,19 @@ serverSocket.bind(('', port))  # Bind to the port
 serverSocket.listen(numberClients)  # Now wait for client connection.
 
 with  open((logPrefix), 'w') as log:
-	sout('Server listening....')
-	tStart = datetime.datetime.now()
+    sout('Server listening....')
+    tStart = datetime.datetime.now()
 
-	threads = []
-	for j in range(numberClients):
-	    conn, addr = serverSocket.accept()
-	    sout('Server adopted connection #' + str(j+1))
-	    thread = Thread(target=threaded_function, args=(conn, addr, j+1))
-	    thread.start()
-	    threads.append(thread)
+    threads = []
+    for j in range(numberClients):
+        conn, addr = serverSocket.accept()
+        sout('Server adopted connection #' + str(j+1))
+        thread = Thread(target=threaded_function, args=(conn, addr, j+1))
+        thread.start()
+        threads.append(thread)
 
-	for i in range(len(threads)):
-	    threads[i].join()
+    for i in range(len(threads)):
+        threads[i].join()
 
-	summary = str(datetime.datetime.now() - tStart) + "s"
-	sout("S: Transfered in " + summary)
-
-
+    summary = str(datetime.datetime.now() - tStart) + "s"
+    sout("S: Transfered in " + summary)

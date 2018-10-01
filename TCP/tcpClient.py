@@ -34,7 +34,7 @@ def recvall(sock, n):
     return data
 
 def getProperties():
-    with open('RedesLab4/TCP/configTCP.txt', 'r') as file:
+    with open('RedesLab4/TCP/configTCP.json', 'r') as file:
         properties = json.load(file)
     return properties
 
@@ -43,7 +43,7 @@ def sout(s):
     log.write(s + '\n')
     log.flush()
 
-with open('clientTCPOut.log', 'w') as log:
+with open('RedesLab4/TCP/clientTCPOut.log', 'w') as log:
     #load properties form json file
     properties = getProperties()
     host = str(properties['serverIp'])
