@@ -10,11 +10,8 @@ from threading import Thread
 def msgSend(msg, sock):
     size = len(msg)
     if len(str(size)) <= 4:
-        #gprint('SIZE MODIFIED')
         first = str('0' * (4 - len(str(size))))
         finalSize = str(first) + str(size)
-    #print('EL SIZE ES : ', finalSize.encode())
-    #print('EL MENSAJE ES : ', str(msg).encode())
     sock.sendall(finalSize.encode())
     sock.sendall(str(msg).encode())
 
@@ -31,12 +28,14 @@ def recvall(sock, n):
         packet = sock.recv(n - len(data))
         if not packet:
             return None
-        #print("Packet  == ", packet)
         data += packet
     return data
 
 
 def threaded_function(conn, addr, id):
+    #Extended timeout to 30s to support more clients
+    conn.settimeout(30)
+    
     start = datetime.datetime.now()
     sout("C" + str(id) + ": Connection started at " + str(start))
     data = msgReceive(conn)
@@ -49,7 +48,6 @@ def threaded_function(conn, addr, id):
     f = open(fileName, 'r')
     l = f.read(chunkSize)
     while (l):
-        #print('EL VALOR DE L ES : ' , l)
         msgSend(l, conn)
         l = f.read(chunkSize)
     f.close()
