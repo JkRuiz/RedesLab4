@@ -39,6 +39,7 @@ def runTest():
 	serverThread = Thread(target=run_server)
 	listOfIPs = properties['clientIPs']
 	serverThread.start()
+	time.sleep(1)
 	for i in range(numberClients):
 		t = Thread(target=run_client, args=[listOfIPs[i]])
 		t.start()
