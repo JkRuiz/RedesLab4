@@ -3,7 +3,7 @@ import socket
 #genera un socket UDP
 cliente = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 #direccion del servidor
-serverAdr = ('localhost', 9000)
+serverAdr = ('157.253.205.94', 9000)
 #envia mensaje al servidor
 cliente.sendto('status OK'.encode(), serverAdr)
 
