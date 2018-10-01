@@ -1,9 +1,16 @@
 import socket
 
+#Obtiene las propiedades del servidor del archivo configUDP.txt
+def getProperties():
+    with open('configUDP.txt', 'r') as file:
+        properties = json.load(file)
+    return properties
+
+properties = getProperties()
 #genera un socket UDP
 cliente = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 #direccion del servidor
-serverAdr = ('157.253.205.94', 9000)
+serverAdr = (properties['serverIp'], int(properties['serverPort']))
 #envia mensaje al servidor
 cliente.sendto('status OK'.encode(), serverAdr)
 
