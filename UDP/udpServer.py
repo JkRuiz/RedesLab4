@@ -31,33 +31,11 @@ def threaded_function(id, addr):
 	
 	#recepción y envio de mensajes.
 	while hay:
-		
-		#abre el archivo que el cliente envio.
-		f = open(fileName)
-		
-		#Chunks de dato a enviar
-		outputData = " "
-		
-		#while para el envio del archivo.
-		while (outputData):
-			
-			#chunk de información que se enviara. 
-			outputData = f.read(chunkSize)
-			
-			#envio de l segmento del archivo.
-			serverSocket.sendto(outputData.encode(), addr)
-			
-			#imprime la información enviada.
-			#print(outputData)
-			
-			#aumenta el contador de paquetes enviados.
-			i = i + 1
-			
-			#imprime el contador.
-			#print (i)
-		
-		#cierra el archivo.
-		f.close()
+		start = datetime.datetime.now()
+
+		for chunk in fileChunks:
+			serverSocket.sendto(chunk.encode(), addr)
+			i = i+1
 		
 		sout("S: END_OF_FILE")
 		
@@ -71,7 +49,8 @@ def threaded_function(id, addr):
 		i = i+1
 		
 		#envia el mensaje de termino.
-		serverSocket.sendto(outputData.encode(), addr)
+		for i in range(intensity):
+			serverSocket.sendto(outputData.encode(), addr)
 		
 		#imprime el contador de mensajes.
 		#print (i)
@@ -124,6 +103,18 @@ host = socket.gethostname()
 #la dirección y el puerto por donde el servidor va a escuchar.
 serverSocket.bind(('', port))
 
+#intensity of protocol messages 
+intensity = properties['intensity']
+
+
+#load file to memory
+fileChunks = []
+with open(fileName, 'r') as f:
+    l = f.read(chunkSize)
+    while (l):
+        fileChunks.append(l)
+        l = f.read(chunkSize)
+
 #abre el archivo del log y registra la hora y la fecha
 with  open((logPrefix), 'w') as log:
 
@@ -140,23 +131,22 @@ with  open((logPrefix), 'w') as log:
 	while j <= numeroClientes:
 		#recibe los datos del socket y la dirección del cliente.
 		data, addr = serverSocket.recvfrom(1024)
-		sout("C" + str(j) + ": " + data.decode())
-		#print (data.decode())
-		sout('Server adopted connection #' + str(j+1))
-		if (data):
-			thread = Thread(target=threaded_function, args=(j, addr))
-			thread.start()
-			threads.append(thread)
+		if 'status OK' in data.decode():
+			sout("C" + str(j) + ": " + data.decode())
+			#print (data.decode())
+			sout('Server adopted connection #' + str(j))
+			if (data):
+				thread = Thread(target=threaded_function, args=(j, addr))
+				thread.start()
+				threads.append(thread)
+				j = j + 1
 	
 	#for que sincroniza los threads.
 	for i in range(len(threads)):
 		threads[i].join()
 
 	summary = str(datetime.datetime.now() - tStart) + "s"
-	sout("S: Transfered in " + summary) 
-
-
-
+	sout("S: Transfered in " + summary)
 
 
 

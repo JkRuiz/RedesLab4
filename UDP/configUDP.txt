@@ -1,8 +1,10 @@
 {
-	"serverPort" : 9000,
-	"chunkSize" : 1024,
-	"numberClients" : 1,
+	"serverPort" : 18080,
+	"chunkSize" : 32768,
+	"numberClients" : 2,
 	"fileName" : "randomText500.txt",
 	"logPrefix" : "UDP_C",
-	"serverIp" : "localhost"
+	"serverIp" : "157.253.205.94",
+	"timeout" : 60,
+	"intensity" : 500
 }

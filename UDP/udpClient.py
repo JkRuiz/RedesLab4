@@ -1,9 +1,18 @@
 import socket
+import json
+import time
 
+#Obtiene las propiedades del servidor del archivo configUDP.txt
+def getProperties():
+    with open('configUDP.txt', 'r') as file:
+        properties = json.load(file)
+    return properties
+
+properties = getProperties()
 #genera un socket UDP
 cliente = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 #direccion del servidor
-serverAdr = ('localhost', 9000)
+serverAdr = (properties['serverIp'], int(properties['serverPort']))
 #envia mensaje al servidor
 cliente.sendto('status OK'.encode(), serverAdr)
 
@@ -15,6 +24,13 @@ mensajeTotal = ""
 i = 0
 #Abre el archivo que va a guardar la información recibida
 f = open('recepción.txt', 'a')
+
+#intensity of protocol messages 
+intensity = properties['intensity']
+
+#timer para hacer timeout de la conexión
+timer = time.time()
+timeout = int(properties['timeout'])
 #while para recibir y enviar mensajes
 while hay:
 	#envia mensaje al servidor
@@ -25,22 +41,32 @@ while hay:
 		i = i +1
 		#se añade el mensaje que llego al que ya había
 		mensajeTotal = mensajeTotal + message.decode()
-		print(mensajeTotal)
+		if i%100 == 0:
+			print("receiving data..")
 	#Si el mensaje contiene "acabe" se cambia ha false la variable booleana y se incrementa el numero de paquetes
 	else:
 		#cambio de la variable
 		hay = False
 		#Incrementa el número de paquetes
 		i = i + 1 
+		print('received END_OF_FILE')
+
+	if (time.time() - timer) >= timeout:
+		hay = False
 #Escribe el archivo.
 f.write(mensajeTotal)
 #Cierra el archivo.
 f.close()
 #print(mensajeTotal)
 #print (i)
+<<<<<<< HEAD
 no = False
 while (not no):
 	cliente.sendto(str(i).encode(), serverAdr)
 	message, addrSerer = cliente.recvfrom(1024)
 	if (message == "OK"):
 		no = True
+=======
+for i in range(intensity):
+	cliente.sendto(str(i).encode(), serverAdr)
+>>>>>>> 5ce36e89682569725045ca8270dc3509cd83ba8c

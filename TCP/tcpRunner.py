@@ -28,8 +28,17 @@ def getProperties():
 def killIptraf():
 	os.system("kill $(ps aux | grep 'iptraf' | awk '{print $2}')")
 
+def logStartNetstat(n):
+	os.system("netstat -s | grep segments >> Logs/Netstat_C" + str(n) + "_Start.log")
+
+def logEndNetstat(n):
+	os.system("netstat -s | grep segments >> Logs/Netstat_C" + str(n) + "_End.log")
+
 def startIptraf(n):
 	os.system("sudo iptraf -i eth0 -L /home/s2g4/RedesLab4/TCP/Logs/TCP_C" + str(n) + "_traffic.log -B")
+
+def makeDirFile():
+	os.system('mkdir Logs')
 
 def runTest():
 	properties = getProperties()
@@ -55,10 +64,13 @@ def swapProperties(n):
 
 p = getProperties();
 nClients = p['nClients']
+makeDirFile()
 for i in nClients:
+	logStartNetstat(i)
 	print('Running client #', str(i))
 	swapProperties(i)
 	runTest()
+	logEndNetstat(i)
 	time.sleep(10)
 
 
