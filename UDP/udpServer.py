@@ -31,6 +31,7 @@ def threaded_function(id, addr):
 	
 	#recepción y envio de mensajes.
 	while hay:
+		start = datetime.datetime.now()
 
 		for chunk in fileChunks:
 			serverSocket.sendto(chunk.encode(), addr)
