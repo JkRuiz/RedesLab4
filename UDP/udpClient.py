@@ -25,6 +25,9 @@ i = 0
 #Abre el archivo que va a guardar la información recibida
 f = open('recepción.txt', 'a')
 
+#intensity of protocol messages 
+intensity = properties['intensity']
+
 #timer para hacer timeout de la conexión
 timer = time.time()
 timeout = int(properties['timeout'])
@@ -54,4 +57,5 @@ f.write(mensajeTotal)
 f.close()
 #print(mensajeTotal)
 #print (i)
-cliente.sendto(str(i).encode(), serverAdr)
+for i in intensity:
+	cliente.sendto(str(i).encode(), serverAdr)

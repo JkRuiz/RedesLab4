@@ -71,7 +71,8 @@ def threaded_function(id, addr):
 		i = i+1
 		
 		#envia el mensaje de termino.
-		serverSocket.sendto(outputData.encode(), addr)
+		for i in intensity:
+			serverSocket.sendto(outputData.encode(), addr)
 		
 		#imprime el contador de mensajes.
 		#print (i)
@@ -117,6 +118,9 @@ host = socket.gethostname()
 
 #la dirección y el puerto por donde el servidor va a escuchar.
 serverSocket.bind(('', port))
+
+#intensity of protocol messages 
+intensity = properties['intensity']
 
 #abre el archivo del log y registra la hora y la fecha
 with  open((logPrefix), 'w') as log:
