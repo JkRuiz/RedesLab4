@@ -71,7 +71,7 @@ def threaded_function(id, addr):
 		i = i+1
 		
 		#envia el mensaje de termino.
-		for i in intensity:
+		for i in range(intensity):
 			serverSocket.sendto(outputData.encode(), addr)
 		
 		#imprime el contador de mensajes.

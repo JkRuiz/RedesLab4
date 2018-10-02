@@ -39,6 +39,7 @@ while hay:
 	if 'END_OF_FILE' not in message.decode():
 		#se incrementa el numero de paquetes recibidos
 		i = i +1
+		print('received END_OF_FILE')
 		#se añade el mensaje que llego al que ya había
 		mensajeTotal = mensajeTotal + message.decode()
 		print(mensajeTotal)
@@ -57,5 +58,5 @@ f.write(mensajeTotal)
 f.close()
 #print(mensajeTotal)
 #print (i)
-for i in intensity:
+for i in range(intensity):
 	cliente.sendto(str(i).encode(), serverAdr)
