@@ -4,7 +4,7 @@ import time
 
 #Obtiene las propiedades del servidor del archivo configUDP.txt
 def getProperties():
-    with open('configUDP.txt', 'r') as file:
+    with open('RedesLab4/UDP/configUDP.txt', 'r') as file:
         properties = json.load(file)
     return properties
 
@@ -23,7 +23,7 @@ mensajeTotal = ""
 #contador de paquetes que recibe
 i = 0
 #Abre el archivo que va a guardar la información recibida
-f = open('recepción.txt', 'a')
+f = open('RedesLab4/UDP/recepcion.txt', 'a')
 
 #intensity of protocol messages 
 intensity = properties['intensity']
