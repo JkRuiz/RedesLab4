@@ -6,9 +6,9 @@ from threading import Thread
 
 #Obtiene las propiedades del servidor del archivo configUDP.txt
 def getProperties():
-    with open('configUDP.txt', 'r') as file:
-        properties = json.load(file)
-    return properties
+	with open('configUDP.txt', 'r') as file:
+		properties = json.load(file)
+	return properties
 
 def sout(l):
 	log.write(l + '\n')
@@ -16,9 +16,9 @@ def sout(l):
 	print(l)
 
 def threaded_function(id, addr):
-	
+	timmer = datetime.datetime.now()
 	#print(id)
-	
+	start = datetime.datetime.now()
 	#contador de paquetes
 	i = 0
 	
@@ -55,10 +55,16 @@ def threaded_function(id, addr):
 		#imprime el contador de mensajes.
 		#print (i)
 		
-		# recive el numero de pauqetes recibidos.
-		data, addr = serverSocket.recvfrom(1024)
-		
 		sout("S: Se enviaron: " + str(i) + "paquetes")
+
+		llego = False
+		while (not llego):
+
+			# recive el numero de pauqetes recibidos.
+			data, addr = serverSocket.recvfrom(1024)
+			if (data != ""):
+				llego = True
+				sout("S: Se recibieron: " + data.decode() + "paquetes")
 		
 		#imprime el numero de paquetes enviados.
 		#print(data.decode())

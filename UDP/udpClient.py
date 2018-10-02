@@ -59,5 +59,14 @@ f.write(mensajeTotal)
 f.close()
 #print(mensajeTotal)
 #print (i)
+<<<<<<< HEAD
+no = False
+while (not no):
+	cliente.sendto(str(i).encode(), serverAdr)
+	message, addrSerer = cliente.recvfrom(1024)
+	if (message == "OK"):
+		no = True
+=======
 for i in range(intensity):
 	cliente.sendto(str(i).encode(), serverAdr)
+>>>>>>> 5ce36e89682569725045ca8270dc3509cd83ba8c
