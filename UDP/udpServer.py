@@ -131,6 +131,7 @@ with  open((logPrefix), 'w') as log:
 			thread = Thread(target=threaded_function, args=(j, addr))
 			thread.start()
 			threads.append(thread)
+		j = j + 1
 	
 	#for que sincroniza los threads.
 	for i in range(len(threads)):

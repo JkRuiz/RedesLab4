@@ -39,16 +39,17 @@ while hay:
 	if 'END_OF_FILE' not in message.decode():
 		#se incrementa el numero de paquetes recibidos
 		i = i +1
-		print('received END_OF_FILE')
 		#se añade el mensaje que llego al que ya había
 		mensajeTotal = mensajeTotal + message.decode()
-		print(mensajeTotal)
+		if i%100 == 0:
+			print("receiving data..")
 	#Si el mensaje contiene "acabe" se cambia ha false la variable booleana y se incrementa el numero de paquetes
 	else:
 		#cambio de la variable
 		hay = False
 		#Incrementa el número de paquetes
 		i = i + 1 
+		print('received END_OF_FILE')
 
 	if (time.time() - timer) >= timeout:
 		hay = False
