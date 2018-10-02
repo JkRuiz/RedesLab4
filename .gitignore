@@ -3,3 +3,4 @@ random*.txt
 *.log
 archivoPrueba.txt 
 P2P/p2predes/target/*
+P2P/p2predes/.idea/*
