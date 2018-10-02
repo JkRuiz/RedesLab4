@@ -38,4 +38,9 @@ f.write(mensajeTotal)
 f.close()
 #print(mensajeTotal)
 #print (i)
-cliente.sendto(str(i).encode(), serverAdr)
+no = False
+while (not no):
+	cliente.sendto(str(i).encode(), serverAdr)
+	message, addrSerer = cliente.recvfrom(1024)
+	if (message == "OK"):
+		no = True
