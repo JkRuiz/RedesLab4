@@ -38,6 +38,7 @@ def startIptraf(n):
 	os.system("sudo iptraf -i eth0 -L /home/s2g4/RedesLab4/TCP/Logs/TCP_C" + str(n) + "_traffic.log -B")
 
 def makeDirFile():
+	os.system('rm -rf Logs')
 	os.system('mkdir Logs')
 
 def runTest():
