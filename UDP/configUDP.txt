@@ -1,6 +1,6 @@
 {
 	"serverPort" : 18080,
-	"chunkSize" : 1024,
+	"chunkSize" : 32768,
 	"numberClients" : 2,
 	"fileName" : "randomText500.txt",
 	"logPrefix" : "UDP_C",

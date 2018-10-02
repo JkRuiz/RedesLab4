@@ -31,33 +31,10 @@ def threaded_function(id, addr):
 	
 	#recepción y envio de mensajes.
 	while hay:
-		
-		#abre el archivo que el cliente envio.
-		f = open(fileName)
-		
-		#Chunks de dato a enviar
-		outputData = " "
-		
-		#while para el envio del archivo.
-		while (outputData):
-			
-			#chunk de información que se enviara. 
-			outputData = f.read(chunkSize)
-			
-			#envio de l segmento del archivo.
-			serverSocket.sendto(outputData.encode(), addr)
-			
-			#imprime la información enviada.
-			#print(outputData)
-			
-			#aumenta el contador de paquetes enviados.
-			i = i + 1
-			
-			#imprime el contador.
-			#print (i)
-		
-		#cierra el archivo.
-		f.close()
+
+		for chunk in fileChunks:
+			serverSocket.sendto(chunk.encode(), addr)
+			i = i+1
 		
 		sout("S: END_OF_FILE")
 		
@@ -122,6 +99,15 @@ serverSocket.bind(('', port))
 #intensity of protocol messages 
 intensity = properties['intensity']
 
+
+#load file to memory
+fileChunks = []
+with open(fileName, 'r') as f:
+    l = f.read(chunkSize)
+    while (l):
+        fileChunks.append(l)
+        l = f.read(chunkSize)
+
 #abre el archivo del log y registra la hora y la fecha
 with  open((logPrefix), 'w') as log:
 
@@ -140,7 +126,7 @@ with  open((logPrefix), 'w') as log:
 		data, addr = serverSocket.recvfrom(1024)
 		sout("C" + str(j) + ": " + data.decode())
 		#print (data.decode())
-		sout('Server adopted connection #' + str(j+1))
+		sout('Server adopted connection #' + str(j))
 		if (data):
 			thread = Thread(target=threaded_function, args=(j, addr))
 			thread.start()
