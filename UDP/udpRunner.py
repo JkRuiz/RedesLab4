@@ -33,7 +33,9 @@ def startIptraf(n):
 	os.system("sudo iptraf -i eth0 -L /home/s2g4/RedesLab4/UDP/Logs/UDP_C" + str(n) + "_traffic.log -B")
 
 def makeDirFile():
+	os.system('rm -rf Logs')
 	os.system('mkdir Logs')
+	os.system('rm -rf clientLogs')
 	os.system('mkdir clientLogs')
 
 def logFileStatus(ip, i, n):
@@ -54,7 +56,7 @@ def runTest(n):
 	serverThread.join()
 	killIptraf()
 	for i in range(numberClients):
-		logFileStatus(listOfIPs[i], i, n)
+		logFileStatus(listOfIPs[i], i+1, n)
 
 def swapProperties(n):
 	with open('configUDP.txt', 'r') as file:
