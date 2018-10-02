@@ -125,24 +125,22 @@ with  open((logPrefix), 'w') as log:
 	while j <= numeroClientes:
 		#recibe los datos del socket y la dirección del cliente.
 		data, addr = serverSocket.recvfrom(1024)
-		sout("C" + str(j) + ": " + data.decode())
-		#print (data.decode())
-		sout('Server adopted connection #' + str(j))
-		if (data):
-			thread = Thread(target=threaded_function, args=(j, addr))
-			thread.start()
-			threads.append(thread)
-		j = j + 1
+		if 'status OK' in data.decode():
+			sout("C" + str(j) + ": " + data.decode())
+			#print (data.decode())
+			sout('Server adopted connection #' + str(j))
+			if (data):
+				thread = Thread(target=threaded_function, args=(j, addr))
+				thread.start()
+				threads.append(thread)
+				j = j + 1
 	
 	#for que sincroniza los threads.
 	for i in range(len(threads)):
 		threads[i].join()
 
 	summary = str(datetime.datetime.now() - tStart) + "s"
-	sout("S: Transfered in " + summary) 
-
-
-
+	sout("S: Transfered in " + summary)
 
 
 
