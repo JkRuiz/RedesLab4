@@ -56,6 +56,7 @@ def runTest(n):
 	serverThread.join()
 	killIptraf()
 	for i in range(numberClients):
+		print('logging for N' + str(n) + ' I' + str(i))
 		logFileStatus(listOfIPs[i], i+1, n)
 
 def swapProperties(n):
