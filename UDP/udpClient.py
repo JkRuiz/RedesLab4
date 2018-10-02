@@ -1,5 +1,6 @@
 import socket
 import json
+import time
 
 #Obtiene las propiedades del servidor del archivo configUDP.txt
 def getProperties():
@@ -23,6 +24,10 @@ mensajeTotal = ""
 i = 0
 #Abre el archivo que va a guardar la información recibida
 f = open('recepción.txt', 'a')
+
+#timer para hacer timeout de la conexión
+timer = time.time()
+timeout = int(properties['timeout'])
 #while para recibir y enviar mensajes
 while hay:
 	#envia mensaje al servidor
@@ -40,6 +45,9 @@ while hay:
 		hay = False
 		#Incrementa el número de paquetes
 		i = i + 1 
+
+	if (time.time() - timer) >= timeout:
+		hay = False
 #Escribe el archivo.
 f.write(mensajeTotal)
 #Cierra el archivo.

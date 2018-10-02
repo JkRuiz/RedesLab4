@@ -4,5 +4,6 @@
 	"numberClients" : 2,
 	"fileName" : "randomText500.txt",
 	"logPrefix" : "UDP_C",
-	"serverIp" : "157.253.205.94"
+	"serverIp" : "157.253.205.94",
+	"timeout" : 10
 }
