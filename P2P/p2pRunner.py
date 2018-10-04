@@ -24,7 +24,7 @@ def unlink_torrent(fileName):
     os.system('rm Downloads/*')
 
 def check_status():
-    status = subprocess.check_output("deluge-console info", shell=True)
+    status = subprocess.check_output("deluge-console info", shell=True).decode()
     if "Seeding" not in status:
         return False
     return True
