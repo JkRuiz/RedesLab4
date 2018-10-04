@@ -17,7 +17,7 @@ def getProperties():
 
 def run_torrent(torrentName):
     os.system('deluged')
-    os.system('deluge-console add RedesLab4/P2P/' + torrentName)
+    os.system('deluge-console add ' + torrentName)
 
 def unlink_torrent(fileName):
     os.system('deluge-console rm ' + fileName)
