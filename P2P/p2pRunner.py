@@ -8,40 +8,41 @@ from email.MIMEMultipart import MIMEMultipart
 from email.MIMEBase import MIMEBase
 from email import Encoders
 
+#Extract properties 
 def getProperties():
-	with open('configP2P.json', 'r'):
-		properties = json.load(file)
+    with open('configP2P.json', 'r'):
+        properties = json.load(file)
     return properties
 
 def run_torrent(torrentName):
-	os.system('deluged')
-	os.system('deluge-console add RedesLab4/P2P/' + torrentName)
+    os.system('deluged')
+    os.system('deluge-console add RedesLab4/P2P/' + torrentName)
 
 def unlink_torrent(fileName):
-	os.system('deluge-console rm ' + fileName)
-	os.system('rm Downloads/*')
+    os.system('deluge-console rm ' + fileName)
+    os.system('rm Downloads/*')
 
 def check_status():
-	status = os.system("deluge-console info")
-	if "Seeding" not in status:
-		return False
-	return True
+    status = os.system("deluge-console info")
+    if "Seeding" not in status:
+        return False
+    return True
 
 def gitUpdate():
-	os.system('git pull')
+    os.system('git pull')
 
 def logStartNetstat(i, n):
-	os.system("netstat -s | grep segments >> Logs/Netstat_T" + str(n) + "_C" + str(i) + "_Start.log")
+    os.system("netstat -s | grep segments >> Logs/Netstat_T" + str(n) + "_C" + str(i) + "_Start.log")
 
 def logEndNetstat(i, n):
-	os.system("netstat -s | grep segments >> Logs/Netstat_T" + str(n) + "_C" + str(i) + "_End.log")
+    os.system("netstat -s | grep segments >> Logs/Netstat_T" + str(n) + "_C" + str(i) + "_End.log")
 
 def handleIfTop(t, i, n):
-	os.system("sudo iftop -t -s " + str(t) + " >> Logs/P2P_T" + str(n) + "_C" + str(i) + "_traffic.log")
+    os.system("sudo iftop -t -s " + str(t) + " >> Logs/P2P_T" + str(n) + "_C" + str(i) + "_traffic.log")
 
 def makeDirFile():
-	os.system('rm -rf Logs')
-	os.system('mkdir Logs')
+    os.system('rm -rf Logs')
+    os.system('mkdir Logs')
 
 def sout(l):
     log.write(l + '\n')
@@ -84,16 +85,16 @@ n = properties['numberClients']
 unlink_torrent(properties['fileName'])
 thread = Thread(target=handleIfTop, args=[t, i, n])
 with open('Logs/P2P_T' + str(n) + "_C" + str(i) + ".log", 'w'):
-	thread.start()
-	logStartNetstat(i, n)
-	run_torrent(properties['torrentName'])
-	tStart = datetime.datetime.now()
-	done = False
-	while not done:
-		done = check_status()
-	summary = str(datetime.datetime.now() - tStart) + "s"
-	logEndNetstat(i, n)
-	sout("C: Transfered in " + summary)
+    thread.start()
+    logStartNetstat(i, n)
+    run_torrent(properties['torrentName'])
+    tStart = datetime.datetime.now()
+    done = False
+    while not done:
+        done = check_status()
+    summary = str(datetime.datetime.now() - tStart) + "s"
+    logEndNetstat(i, n)
+    sout("C: Transfered in " + summary)
 thread.join()
 logs = ['Logs/P2P_T' + str(n) + "_C" + str(i) + ".log",
 "Logs/P2P_T" + str(n) + "_C" + str(i) + "_traffic.log",
