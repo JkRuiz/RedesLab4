@@ -85,7 +85,7 @@ t = properties['runtime']
 n = properties['numberClients']
 unlink_torrent(properties['fileName'])
 thread = Thread(target=handleIfTop, args=[t, i, n])
-with open('Logs/P2P_T' + str(n) + "_C" + str(i) + ".log", 'w'):
+with open('Logs/P2P_T' + str(n) + "_C" + str(i) + ".log", 'w') as log:
     thread.start()
     logStartNetstat(i, n)
     run_torrent(properties['torrentName'])
