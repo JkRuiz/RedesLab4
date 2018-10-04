@@ -10,7 +10,7 @@ from email import encoders
 
 #Extract properties 
 def getProperties():
-    with open('configP2P.json', 'r'):
+    with open('configP2P.json', 'r') as file:
         properties = json.load(file)
     return properties
 
