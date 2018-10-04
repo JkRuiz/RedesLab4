@@ -6,7 +6,7 @@ from threading import Thread
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
-from email import Encoders
+from email import encoders
 
 #Extract properties 
 def getProperties():
