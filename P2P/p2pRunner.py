@@ -1,4 +1,5 @@
 import os
+import subprocess   
 import json
 import smtplib
 import datetime
@@ -23,7 +24,7 @@ def unlink_torrent(fileName):
     os.system('rm Downloads/*')
 
 def check_status():
-    status = os.system("deluge-console info")
+    status = subprocess.check_output("deluge-console info", shell=True)
     if "Seeding" not in status:
         return False
     return True
