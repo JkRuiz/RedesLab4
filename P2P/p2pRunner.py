@@ -71,7 +71,7 @@ def send_mail_gmail(username,password,sender,toaddrs_list,msg_text,subject,attac
                 part.add_header('Content-Disposition', 'attachment' ,filename=file_name)
                 msg.attach(part)
             except:
-                print "could not attache file"
+                print("could not attach file")
     msg.attach(MIMEText(msg_text,'html'))
     s.sendmail(sender, recipients, msg.as_string())
 
