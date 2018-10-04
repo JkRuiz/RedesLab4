@@ -56,7 +56,6 @@ def send_mail_gmail(username,password,sender,toaddrs_list,msg_text,subject,attac
     s.login(username, password)
     #s.set_debuglevel(1)
     msg = MIMEMultipart()
-    sender = fromaddr
     recipients = toaddrs_list
     msg['Subject'] = subject
     msg['From'] = sender
@@ -97,6 +96,7 @@ with open('Logs/P2P_T' + str(n) + "_C" + str(i) + ".log", 'w') as log:
     logEndNetstat(i, n)
     sout("C: Transfered in " + summary)
 thread.join()
+unlink_torrent(properties['fileName'])
 logs = ['Logs/P2P_T' + str(n) + "_C" + str(i) + ".log",
 "Logs/P2P_T" + str(n) + "_C" + str(i) + "_traffic.log",
 "Logs/Netstat_T" + str(n) + "_C" + str(i) + "_End.log",
