@@ -21,7 +21,7 @@ def run_torrent(torrentName):
 
 def unlink_torrent(fileName):
     os.system('deluge-console rm ' + fileName)
-    os.system('rm Downloads/*')
+    os.system('rm /home/maro96leon/Downloads/*')
 
 def check_status():
     status = subprocess.check_output("deluge-console info", shell=True).decode()
@@ -67,7 +67,7 @@ def send_mail_gmail(username,password,sender,toaddrs_list,msg_text,subject,attac
                 part = MIMEBase('application', "octet-stream")
                 part.set_payload(open(each_file_path, "rb").read())
 
-                Encoders.encode_base64(part)
+                encoders.encode_base64(part)
                 part.add_header('Content-Disposition', 'attachment' ,filename=file_name)
                 msg.attach(part)
             except:
