@@ -78,7 +78,7 @@ def send_mail_gmail(username,password,sender,toaddrs_list,msg_text,subject,attac
 gitUpdate()
 makeDirFile()
 properties = getProperties()
-i = input('Client number:')
+i = properties['numberClients']
 print("Running client #" + i)
 t = properties['runtime']
 n = properties['numberClients']
