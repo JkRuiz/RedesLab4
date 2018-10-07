@@ -1,7 +1,7 @@
 {
-	"numberClients" : 3,
-	"fileName" : "randomText250.txt",
-	"torrentName" : "txt250.torrent",
+	"numberClients" : 10,
+	"fileName" : "randomText500.txt",
+	"torrentName" : "txt500.torrent",
 	"email" : "jorgeleon9698@gmail.com",
 	"dest" : ["jorgeleon9698@gmail.com"],
 	"passwd" : "Xywxyr-ryhdum-ricvu3",
