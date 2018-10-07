@@ -50,6 +50,11 @@ def sout(l):
     log.flush()
     print(l)
 
+def getId():
+    with open('id','r') as f:
+        nId = json.load(f)['id']
+    return nId
+
 def send_mail_gmail(username,password,sender,toaddrs_list,msg_text,subject,attachment_path_list):
     s = smtplib.SMTP('smtp.gmail.com:587')
     s.starttls()
@@ -78,7 +83,7 @@ def send_mail_gmail(username,password,sender,toaddrs_list,msg_text,subject,attac
 gitUpdate()
 makeDirFile()
 properties = getProperties()
-i = properties['numberClients']
+i = getId()
 print("Running client #" + i)
 t = properties['runtime']
 n = properties['numberClients']
