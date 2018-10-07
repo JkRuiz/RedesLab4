@@ -108,4 +108,4 @@ logs = ['Logs/P2P_T' + str(n) + "_C" + str(i) + ".log",
 "Logs/Netstat_T" + str(n) + "_C" + str(i) + "_End.log",
 "Logs/Netstat_T" + str(n) + "_C" + str(i) + "_Start.log"]
 send_mail_gmail(properties['email'], properties['passwd'],properties['email'],properties['dest'],
-"Working OK", "Logs for T" + str(n) + " C" + str(i), logs)
+"Working OK", "Logs for T" + str(n) + " C" + str(i) + " " + properties['fileName'], logs)
