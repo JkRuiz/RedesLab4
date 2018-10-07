@@ -82,6 +82,7 @@ def send_mail_gmail(username,password,sender,toaddrs_list,msg_text,subject,attac
     msg.attach(MIMEText(msg_text,'html'))
     s.sendmail(sender, recipients, msg.as_string())
 
+gitUpdate()
 makeDirFile()
 properties = getProperties()
 i = getId()
