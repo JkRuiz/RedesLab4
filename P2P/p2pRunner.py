@@ -3,6 +3,7 @@ import subprocess
 import json
 import smtplib
 import datetime
+import time
 from threading import Thread
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -17,6 +18,7 @@ def getProperties():
 
 def run_torrent(torrentName):
     os.system('deluged')
+    time.sleep(5)
     os.system('deluge-console add ' + torrentName)
 
 def unlink_torrent(fileName):
