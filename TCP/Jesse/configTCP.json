@@ -1,0 +1,1 @@
+{"nClients": [25], "serverPort": 8080, "chunkSize": 1024, "numberClients": 5, "fileName": "Gorillaz.mp4", "logPrefix": "Logs/TCP_C", "serverIp": "192.168.0.6", "clientIPs": ["192.168.0.17"]}

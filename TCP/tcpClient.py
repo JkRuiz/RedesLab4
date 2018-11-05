@@ -16,12 +16,14 @@ def msgSend(msg, sock):
     sock.sendall(finalSize.encode())
     sock.sendall(str(msg).encode())
 
+
 def msgReceive(sock):
     size = recvall(sock, 4).decode()
     if size == '':
         return ''
     data = recvall(sock, int(size)).decode()
     return data
+
 
 def recvall(sock, n):
     data = b''
@@ -31,52 +33,55 @@ def recvall(sock, n):
             data += packet
     return data
 
+
 def getProperties():
-    with open('RedesLab4/TCP/configTCP.json', 'r') as file:
+    with open('configTCP.json', 'r') as file:
         properties = json.load(file)
     return properties
+
 
 def sout(s):
     print(s)
     log.write(s + '\n')
     log.flush()
 
-with open('RedesLab4/TCP/clientTCPOut.log', 'w') as log:
-    #load properties form json file
+
+with open('clientTCPOut.log', 'w') as log:
+    # load properties form json file
     properties = getProperties()
     host = str(properties['serverIp'])
     port = int(properties['serverPort'])
     chunkSize = int(properties['chunkSize'])
 
-    #start socket
+    # start socket
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    #Extended timeout to avoid broken pipes
+    # Extended timeout to avoid broken pipes
     s.settimeout(999999999)
 
-    #define some constants for the file transfer protocol
+    # define some constants for the file transfer protocol
     statusOk = 'STATUS_OK'
     fileOk = 'FILE_OK'
     fileError = 'FILE_ERROR'
     endFile = 'END_OF_FILE'
     sout('done with defining variables')
 
-    #connect to server
+    # connect to server
     s.connect((host, port))
 
-    #tell server client is ready to receive
+    # tell server client is ready to receive
     msgSend(statusOk, s)
 
-    #receive filename of file to be transfered
+    # receive filename of file to be transfered
     fileName = msgReceive(s)
 
-    #create hasher to check integrity later on
+    # create hasher to check integrity later on
     hasher = hashlib.md5()
 
     with open("R_" + fileName, 'w') as f:
         i = 0
         while True:
-            i+=1
-            if i%10000 == 0: 
+            i += 1
+            if i % 10000 == 0:
                 sout('receiving data...')
             data = msgReceive(s)
             #print('DATO : ', data)

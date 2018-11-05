@@ -35,7 +35,7 @@ def recvall(sock, n):
 def threaded_function(conn, addr, id):
     #Extended timeout to avoid broken pipes
     conn.settimeout(999999999)
-    
+
     start = datetime.datetime.now()
     sout("C" + str(id) + ": Connection started at " + str(start))
     data = msgReceive(conn)
@@ -73,7 +73,7 @@ fileName = properties['fileName']
 numberClients = int(properties['numberClients'])
 port = int(properties['serverPort'])
 chunkSize = int(properties['chunkSize'])
-logPrefix = properties['logPrefix'] + str(numberClients) + "_Server.log"
+logPrefix = "_Server.log"
 
 serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 host = socket.gethostname()
